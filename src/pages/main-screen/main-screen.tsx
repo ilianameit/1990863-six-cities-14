@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
 import Locations from '../../components/locations/locations';
 import OfferCard from '../../components/offer-card/offer-card';
@@ -10,6 +11,9 @@ function MainScreen({offers}: MainProp): JSX.Element {
   return (
     //header авторизован/неавторизован
     <div className="page page--gray page--main">
+      <Helmet>
+        <title>6 cities</title>
+      </Helmet>
 
       <Header/>
 

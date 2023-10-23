@@ -14,3 +14,5 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export const authorizationStatus = AuthorizationStatus.Auth;

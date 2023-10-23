@@ -1,9 +1,9 @@
 import { Navigate } from 'react-router-dom';
 import Header from '../../components/header/header';
-import { authorizationStatus } from '../../utils/authorixation-status/auhtorizationStatus';
 import { checkAuthorizationStatus } from '../../utils/authorixation-status/check-authorization-status';
-import { AppRoutes } from '../../components/const';
+import { AppRoutes, authorizationStatus } from '../../const/const';
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 
 function LoginScreen(): JSX.Element {
   return (
@@ -13,6 +13,9 @@ function LoginScreen(): JSX.Element {
         <Navigate to={AppRoutes.Main} /> :
         (
           <React.Fragment>
+            <Helmet>
+              <title>6 cities: authorization</title>
+            </Helmet>
             <Header withoutLogin/>
 
             <main className="page__main page__main--login">

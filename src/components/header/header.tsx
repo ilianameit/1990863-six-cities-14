@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
 import Logo from '../logo/logo';
-import { AppRoutes} from '../const';
+import { AppRoutes, authorizationStatus} from '../../const/const';
 import { checkAuthorizationStatus } from '../../utils/authorixation-status/check-authorization-status';
-import { authorizationStatus } from '../../utils/authorixation-status/auhtorizationStatus';
 
 type HeaderProp = {
   withoutLogin?: boolean;
