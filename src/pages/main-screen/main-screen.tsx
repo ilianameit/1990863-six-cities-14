@@ -1,10 +1,12 @@
 import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
 import Locations from '../../components/locations/locations';
-import OfferCard from '../../components/offer-card/offer-card';
+import { OfferPreview } from '../../types/offer-preview';
+import { insertPlural } from '../../utils/common';
+import { OffersList } from '../../components/offers-list/offers-list';
 
 type MainProp = {
-  offers: number;
+  offers: OfferPreview[];
 }
 
 function MainScreen({offers}: MainProp): JSX.Element {
@@ -26,7 +28,7 @@ function MainScreen({offers}: MainProp): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers} places to stay in Amsterdam</b>
+              <b className="places__found">{offers.length} place{insertPlural(offers.length)} to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -42,11 +44,7 @@ function MainScreen({offers}: MainProp): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {
-                  Array(offers).fill(<OfferCard/>)
-                }
-              </div>
+              <OffersList offers={offers}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
