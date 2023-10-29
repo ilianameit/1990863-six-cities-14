@@ -5,19 +5,35 @@ import { capitalize, getRatingWidth } from '../../utils/common';
 
 type Blocks = 'cities' | 'favorites';
 
+type ImageSize = 'small' | 'large';
+
 type OfferProps = {
   offer: OfferPreview;
   block: Blocks;
-  handleMouseEnter: (id: number) => void;
+  onCardHover?: (id: number | null) => void;
+  size?: ImageSize;
+};
+
+const imageSize: Record<ImageSize, {width: string; height: string}> = {
+  small: {width: '150', height: '110'},
+  large:{ width: '260', height: '200'},
 };
 
 
-function OfferCard({offer, block, handleMouseEnter}: OfferProps): JSX.Element {
+function OfferCard({offer, block, onCardHover, size = 'large'}: OfferProps): JSX.Element {
   const {id, previewImage, title, isFavorite, isPremium, rating, type, price} = offer;
+
+  function handleMouseEnter() {
+    onCardHover?.(id);
+  }
+  function handleMouseLeave() {
+    onCardHover?.(null);
+  }
   return(
     <article
       className={`${block}__card place-card`}
-      onMouseEnter={() => handleMouseEnter(id) }
+      onMouseEnter={() => handleMouseEnter}
+      onMouseLeave={() => handleMouseLeave}
     >
       {isPremium && (
         <div className="place-card__mark">
@@ -30,8 +46,7 @@ function OfferCard({offer, block, handleMouseEnter}: OfferProps): JSX.Element {
           <img
             className="place-card__image"
             src={previewImage}
-            width="260"
-            height="200"
+            {...imageSize[size]}
             alt={title}
           />
         </Link>

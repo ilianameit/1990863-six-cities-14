@@ -6,13 +6,17 @@ type OffersListProps = {
   offers: OfferPreview[];
 };
 export function OffersList({offers}: OffersListProps): JSX.Element {
-  const [, setActiveCard] = useState<number | null>(null);
+  const [, setActiveCard] = useState<OfferPreview['id'] | null>(null);
+
+  function handleCardHover(id: OfferPreview['id'] | null) {
+    setActiveCard(id);
+  }
 
   return(
     <div className="cities__places-list places__list tabs__content">
       {
         offers.map((offer) => (
-          <OfferCard key={offer.id} offer={offer} block='cities' handleMouseEnter={(id) => setActiveCard(id)} /> // не уверена, что правильная концепция передачи параметра
+          <OfferCard key={offer.id} offer={offer} block='cities' onCardHover={handleCardHover} />
         ))
       }
     </div>
