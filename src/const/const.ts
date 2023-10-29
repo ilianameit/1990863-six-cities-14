@@ -1,25 +1,36 @@
 import { checkAuthorizationStatus } from '../utils/authorixation-status/check-authorization-status';
 
-export const SETTING = {
+const SETTING = {
   offers: 5
 };
 
-export const COUNT_OFFER_IMAGES = 6;
+const COUNT_OFFER_IMAGES = 6;
 
-export enum AppRoutes {
+const MAX_COMMENT_LENGTH = 300;
+const MIN_COMMENT_LENGTH = 50;
+
+const ratingStarsName = {
+  '1': 'terribly',
+  '2': 'badly',
+  '3': 'not bad',
+  '4': 'good',
+  '5': 'perfect'
+};
+
+enum AppRoutes {
   Main = '/',
   Login = '/login',
   Favorites = '/favorites',
   Offer = '/offer',
 }
 
-export enum AuthorizationStatus {
+enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
 
-export const CityName = {
+const CityName = {
   Paris: 'Paris',
   Cologne: 'Cologne',
   Brussels: 'Brussels',
@@ -28,6 +39,18 @@ export const CityName = {
   Dusseldorf: 'Dusseldorf'
 
 } as const;
+const authorizationStatus = AuthorizationStatus.Auth;
+const isLogged = checkAuthorizationStatus(authorizationStatus);
 
-export const authorizationStatus = AuthorizationStatus.Auth;
-export const isLogged = checkAuthorizationStatus(authorizationStatus);
+export {
+  SETTING,
+  COUNT_OFFER_IMAGES,
+  MAX_COMMENT_LENGTH,
+  MIN_COMMENT_LENGTH,
+  ratingStarsName,
+  AppRoutes,
+  AuthorizationStatus,
+  CityName,
+  authorizationStatus,
+  isLogged
+};
