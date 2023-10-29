@@ -1,7 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import Header from '../../components/header/header';
-import { checkAuthorizationStatus } from '../../utils/authorixation-status/check-authorization-status';
-import { AppRoutes, authorizationStatus } from '../../const/const';
+import { AppRoutes, isLogged } from '../../const/const';
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
@@ -9,7 +8,7 @@ function LoginScreen(): JSX.Element {
   return (
     //header только logo д.б
     <div className="page page--gray page--login">
-      {checkAuthorizationStatus(authorizationStatus) ?
+      {isLogged ?
         <Navigate to={AppRoutes.Main} /> :
         (
           <React.Fragment>

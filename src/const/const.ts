@@ -1,3 +1,5 @@
+import { checkAuthorizationStatus } from '../utils/authorixation-status/check-authorization-status';
+
 export const SETTING = {
   offers: 5
 };
@@ -28,3 +30,4 @@ export const CityName = {
 } as const;
 
 export const authorizationStatus = AuthorizationStatus.Auth;
+export const isLogged = checkAuthorizationStatus(authorizationStatus);

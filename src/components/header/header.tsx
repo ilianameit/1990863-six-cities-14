@@ -1,14 +1,13 @@
 import { Link } from 'react-router-dom';
 import Logo from '../logo/logo';
-import { AppRoutes, authorizationStatus} from '../../const/const';
-import { checkAuthorizationStatus } from '../../utils/authorixation-status/check-authorization-status';
+import { AppRoutes, isLogged} from '../../const/const';
+
 
 type HeaderProp = {
   withoutLogin?: boolean;
 }
 
 function Header({withoutLogin}: HeaderProp): JSX.Element {
-  const isLogged = checkAuthorizationStatus(authorizationStatus);
   return(
     <header className="header">
       <div className="container">
