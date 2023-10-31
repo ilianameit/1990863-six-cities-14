@@ -1,4 +1,4 @@
-.container {
+.container-404 {
   padding-top: 50px;
 }
  hr {
@@ -7,10 +7,10 @@
   border: none;
   height: 2px;
  }
-.header {
+.header-404 {
   padding-top: 20px;
 }
 
-a {
+a.a-404 {
   text-decoration: underline;
 }
