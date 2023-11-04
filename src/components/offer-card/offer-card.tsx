@@ -10,7 +10,7 @@ type ImageSize = 'small' | 'large';
 type OfferProps = {
   offer: OfferPreview;
   block: Blocks;
-  onCardHover?: (id: number | null) => void;
+  onCardHover?: (offer: OfferPreview | null) => void;
   size?: ImageSize;
 };
 
@@ -24,7 +24,7 @@ function OfferCard({offer, block, onCardHover, size = 'large'}: OfferProps): JSX
   const {id, previewImage, title, isFavorite, isPremium, rating, type, price} = offer;
 
   function handleMouseEnter() {
-    onCardHover?.(id);
+    onCardHover?.(offer);
   }
   function handleMouseLeave() {
     onCardHover?.(null);
