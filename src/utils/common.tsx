@@ -11,4 +11,16 @@ function capitalize(word: string) {
   return word[0].toUpperCase() + word.slice(1);
 }
 
-export {insertPlural, getRatingWidth, capitalize};
+function roundRating(rating: number) {
+  return Math.round(rating);
+}
+
+function formatDate(date: string) {
+  const options: Intl.DateTimeFormatOptions = {
+    month: 'long',
+    year: 'numeric',
+  };
+  return new Intl.DateTimeFormat('en-US', options).format(new Date(date));
+}
+
+export {insertPlural, getRatingWidth, capitalize, roundRating, formatDate};
