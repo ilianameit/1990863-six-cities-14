@@ -1,4 +1,4 @@
-import { checkAuthorizationStatus } from '../utils/authorixation-status/check-authorization-status';
+import { checkAuthorizationStatus } from '../utils/authorization-status/check-authorization-status';
 
 const SETTING = {
   offers: 5
@@ -8,6 +8,9 @@ const COUNT_OFFER_IMAGES = 6;
 
 const MAX_COMMENT_LENGTH = 300;
 const MIN_COMMENT_LENGTH = 50;
+
+const MAX_COMMENT_COUNT = 10;
+const MAX_NEAR_PLACES_COUNT = 3;
 
 const ratingStarsName = {
   '1': 'terribly',
@@ -30,15 +33,8 @@ enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-const CityName = {
-  Paris: 'Paris',
-  Cologne: 'Cologne',
-  Brussels: 'Brussels',
-  Amsterdam: 'Amsterdam',
-  Hamburg: 'Hamburg',
-  Dusseldorf: 'Dusseldorf'
+const CityName = ['Paris','Cologne','Brussels','Amsterdam','Hamburg','Dusseldorf'] as const;
 
-} as const;
 const authorizationStatus = AuthorizationStatus.Auth;
 const isLogged = checkAuthorizationStatus(authorizationStatus);
 
@@ -47,6 +43,8 @@ export {
   COUNT_OFFER_IMAGES,
   MAX_COMMENT_LENGTH,
   MIN_COMMENT_LENGTH,
+  MAX_COMMENT_COUNT,
+  MAX_NEAR_PLACES_COUNT,
   ratingStarsName,
   AppRoutes,
   AuthorizationStatus,
