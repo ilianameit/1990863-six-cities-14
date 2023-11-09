@@ -4,6 +4,7 @@ import { City } from '../../types/city';
 import classNames from 'classnames';
 
 //getParametr исправить маршрутизацию
+
 type LocationsProp = {
   activeCity: City['name'];
   onCityClick: (city: City['name']) => void;
