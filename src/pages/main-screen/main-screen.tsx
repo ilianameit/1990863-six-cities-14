@@ -4,11 +4,12 @@ import Locations from '../../components/locations/locations';
 import { OfferPreview } from '../../types/offer-preview';
 import { insertPlural } from '../../utils/common';
 import { OffersList } from '../../components/offers-list/offers-list';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { City } from '../../types/city';
 import { Map } from '../../components/map/map';
 import { EpmtyList } from '../../components/empty-list/empty-list';
 import classNames from 'classnames';
+import { useLocation } from 'react-router-dom';
 
 type MainProp = {
   offers: OfferPreview[];
@@ -16,11 +17,21 @@ type MainProp = {
 
 function MainScreen({offers}: MainProp): JSX.Element {
   const [activeCity, setActiveCity] = useState<City['name']>('Amsterdam');
-  const locationActiveCity = offers.find(({city}) => city.name === activeCity)?.city as City;
+  //new URLSearchParams(useLocation().search).set('city', activeCity);
+  const citty = new URLSearchParams(useLocation().search).get('city')<City> ;
+
+  useEffect(() => {
+    if(citty) {
+      setActiveCity(citty);
+    } else {
+      setActiveCity('Amsterdam');
+    }
+  }, [citty]);
+  const locationActiveCity = offers.find(({city}) => city.name === activeCity)?.city as City; //пока не поняла как типизировать если не через as
 
   function handleCityClick(city: City['name']) {
     //evt.Deafault ????
-    setActiveCity(city);
+    //setActiveCity(city);
   }
 
   const [activeCard, setActiveCard] = useState<OfferPreview| null>(null);

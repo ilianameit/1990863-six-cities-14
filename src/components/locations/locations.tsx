@@ -3,7 +3,7 @@ import { CityName } from '../../const/const';
 import { City } from '../../types/city';
 import classNames from 'classnames';
 
-
+//getParametr исправить маршрутизацию
 type LocationsProp = {
   activeCity: City['name'];
   onCityClick: (city: City['name']) => void;
@@ -19,7 +19,7 @@ function Locations({activeCity, onCityClick}: LocationsProp): JSX.Element {
             className='locations__item'
           >
             <Link
-              to='#'
+              to={`?city=${city}`}
               className={classNames(
                 'locations__item-link',
                 'tabs__item',
