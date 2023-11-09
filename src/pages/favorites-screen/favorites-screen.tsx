@@ -2,15 +2,15 @@ import { Helmet } from 'react-helmet-async';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import { OfferPreview } from '../../types/offer-preview';
-import { CityName } from '../../const/const';
 import OfferCard from '../../components/offer-card/offer-card';
+import { City } from '../../types/city';
 
 type FavoritesScreenProps = {
   offers: OfferPreview[];
 }
 
 function FavoritesScreen({offers}: FavoritesScreenProps): JSX.Element {
-  const favoritesCity = new Set<keyof typeof CityName>();
+  const favoritesCity = new Set<City['name']>();
   const favoritesOffers = offers
     .filter((offer) => offer.isFavorite)
     .sort((a, b) => (a.city.name > b.city.name ? 1 : -1));

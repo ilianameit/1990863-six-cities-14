@@ -1,4 +1,4 @@
-import { checkAuthorizationStatus } from '../utils/authorixation-status/check-authorization-status';
+import { checkAuthorizationStatus } from '../utils/authorization-status/check-authorization-status';
 
 const SETTING = {
   offers: 5
@@ -30,15 +30,8 @@ enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-const CityName = {
-  Paris: 'Paris',
-  Cologne: 'Cologne',
-  Brussels: 'Brussels',
-  Amsterdam: 'Amsterdam',
-  Hamburg: 'Hamburg',
-  Dusseldorf: 'Dusseldorf'
+const CityName = ['Paris','Cologne','Brussels','Amsterdam','Hamburg','Dusseldorf'] as const;
 
-} as const;
 const authorizationStatus = AuthorizationStatus.Auth;
 const isLogged = checkAuthorizationStatus(authorizationStatus);
 

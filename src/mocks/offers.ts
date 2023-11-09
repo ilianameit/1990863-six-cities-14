@@ -1,11 +1,10 @@
-import { CityName } from '../const/const';
 import { Offer } from '../types/offer';
 
 export const offers: Offer[] = [
   {
     id: 1,
     city: {
-      name: CityName.Dusseldorf,
+      name: 'Dusseldorf',
       location: {
         latitude: 51.225402,
         longitude: 6.776314,
@@ -34,7 +33,7 @@ export const offers: Offer[] = [
     isPremium: false,
     rating: 4.8,
     type: 'room',
-    bedrooms: 1,
+    bedrooms: 2,
     maxAdults: 2,
     price: 142,
     goods: [
@@ -58,7 +57,7 @@ export const offers: Offer[] = [
   {
     id: 2,
     city: {
-      name: CityName.Amsterdam,
+      name: 'Amsterdam',
       location: {
         latitude: 52.37454,
         longitude: 4.897976,
@@ -111,7 +110,7 @@ export const offers: Offer[] = [
   {
     id: 3,
     city: {
-      name: CityName.Brussels,
+      name: 'Brussels',
       location: {
         latitude: 50.846557,
         longitude: 4.351697,
@@ -171,7 +170,7 @@ export const offers: Offer[] = [
   {
     id: 4,
     city: {
-      name: CityName.Paris,
+      name: 'Paris',
       location: {
         latitude: 48.85661,
         longitude: 2.351499,
@@ -226,6 +225,223 @@ export const offers: Offer[] = [
       latitude: 48.834610000000005,
       longitude: 2.335499,
       zoom: 16
+    },
+  },
+  {
+    'id': 5,
+    'city': {
+      'name': 'Amsterdam',
+      'location': {
+        'latitude': 52.37454,
+        'longitude': 4.897976,
+        'zoom': 13
+      }
+    },
+    'previewImage': 'https://14.react.pages.academy/static/offer/9.jpg',
+    'images': [
+      'https://14.react.pages.academy/static/offer/19.jpg',
+      'https://14.react.pages.academy/static/offer/10.jpg',
+      'https://14.react.pages.academy/static/offer/8.jpg',
+      'https://14.react.pages.academy/static/offer/16.jpg',
+      'https://14.react.pages.academy/static/offer/4.jpg',
+      'https://14.react.pages.academy/static/offer/7.jpg',
+      'https://14.react.pages.academy/static/offer/5.jpg',
+      'https://14.react.pages.academy/static/offer/18.jpg',
+      'https://14.react.pages.academy/static/offer/11.jpg',
+      'https://14.react.pages.academy/static/offer/14.jpg',
+      'https://14.react.pages.academy/static/offer/17.jpg',
+      'https://14.react.pages.academy/static/offer/3.jpg',
+      'https://14.react.pages.academy/static/offer/2.jpg',
+      'https://14.react.pages.academy/static/offer/1.jpg'
+    ],
+    'title': 'Wood and stone place',
+    'isFavorite': false,
+    'isPremium': false,
+    'rating': 5,
+    'type': 'room',
+    'bedrooms': 1,
+    'maxAdults': 2,
+    'price': 222,
+    'goods': [
+      'Laptop friendly workspace',
+      'Breakfast',
+      'Washer'
+    ],
+    'host': {
+      'id': 25,
+      'name': 'Angelina',
+      'isPro': true,
+      'avatarUrl': 'img/avatar-angelina.jpg'
+    },
+    'description': 'Discover daily local life in city center, friendly neighborhood, clandestine casino, karaoke, old-style artisans, art gallery and artist studio downstairs.',
+    'location': {
+      'latitude': 52.3909553943508,
+      'longitude': 4.85309666406198,
+      'zoom': 16
+    },
+  },
+  {
+    'id': 6,
+    'city': {
+      'name': 'Amsterdam',
+      'location': {
+        'latitude': 52.37454,
+        'longitude': 4.897976,
+        'zoom': 13
+      }
+    },
+    'previewImage': 'https://14.react.pages.academy/static/offer/20.jpg',
+    'images': [
+      'https://14.react.pages.academy/static/offer/8.jpg',
+      'https://14.react.pages.academy/static/offer/19.jpg',
+      'https://14.react.pages.academy/static/offer/5.jpg',
+      'https://14.react.pages.academy/static/offer/12.jpg',
+      'https://14.react.pages.academy/static/offer/11.jpg',
+      'https://14.react.pages.academy/static/offer/7.jpg',
+      'https://14.react.pages.academy/static/offer/10.jpg',
+      'https://14.react.pages.academy/static/offer/15.jpg',
+      'https://14.react.pages.academy/static/offer/13.jpg',
+      'https://14.react.pages.academy/static/offer/6.jpg',
+      'https://14.react.pages.academy/static/offer/16.jpg',
+      'https://14.react.pages.academy/static/offer/17.jpg',
+      'https://14.react.pages.academy/static/offer/4.jpg',
+      'https://14.react.pages.academy/static/offer/2.jpg'
+    ],
+    'title': 'The Joshua Tree House',
+    'isFavorite': false,
+    'isPremium': false,
+    'rating': 3.8,
+    'type': 'house',
+    'bedrooms': 2,
+    'maxAdults': 4,
+    'price': 666,
+    'goods': [
+      'Washer',
+      'Laptop friendly workspace',
+      'Breakfast',
+      'Baby seat',
+      'Air conditioning'
+    ],
+    'host': {
+      'id': 25,
+      'name': 'Angelina',
+      'isPro': true,
+      'avatarUrl': 'img/avatar-angelina.jpg'
+    },
+    'description': 'Discover daily local life in city center, friendly neighborhood, clandestine casino, karaoke, old-style artisans, art gallery and artist studio downstairs.',
+    'location': {
+      'latitude': 52.3609553943508,
+      'longitude': 4.85309666406198,
+      'zoom': 16
+    },
+  },
+  {
+    'id': 7,
+    'city': {
+      'name': 'Amsterdam',
+      'location': {
+        'latitude': 52.37454,
+        'longitude': 4.897976,
+        'zoom': 13
+      }
+    },
+    'previewImage': 'https://14.react.pages.academy/static/offer/10.jpg',
+    'images': [
+      'https://14.react.pages.academy/static/offer/10.jpg',
+      'https://14.react.pages.academy/static/offer/18.jpg',
+      'https://14.react.pages.academy/static/offer/12.jpg',
+      'https://14.react.pages.academy/static/offer/2.jpg',
+      'https://14.react.pages.academy/static/offer/6.jpg',
+      'https://14.react.pages.academy/static/offer/8.jpg',
+      'https://14.react.pages.academy/static/offer/3.jpg',
+      'https://14.react.pages.academy/static/offer/20.jpg',
+      'https://14.react.pages.academy/static/offer/16.jpg',
+      'https://14.react.pages.academy/static/offer/9.jpg',
+      'https://14.react.pages.academy/static/offer/19.jpg',
+      'https://14.react.pages.academy/static/offer/14.jpg',
+      'https://14.react.pages.academy/static/offer/15.jpg',
+      'https://14.react.pages.academy/static/offer/7.jpg'
+    ],
+    'title': 'Wood and stone place',
+    'isFavorite': false,
+    'isPremium': false,
+    'rating': 4.9,
+    'type': 'house',
+    'bedrooms': 3,
+    'maxAdults': 9,
+    'price': 855,
+    'goods': [
+      'Breakfast',
+      'Laptop friendly workspace'
+    ],
+    'host': {
+      'id': 25,
+      'name': 'Angelina',
+      'isPro': true,
+      'avatarUrl': 'img/avatar-angelina.jpg'
+    },
+    'description': 'Peaceful studio in the most wanted area in town. Quiet house Near of everything. Completely renovated. Lovely neighbourhood, lot of trendy shops, restaurants and bars in a walking distance.',
+    'location': {
+      'latitude': 52.3909553943508,
+      'longitude': 4.929309666406198,
+      'zoom': 16
+    },
+  },
+  {
+    'id': 8,
+    'city': {
+      'name': 'Amsterdam',
+      'location': {
+        'latitude': 52.37454,
+        'longitude': 4.897976,
+        'zoom': 13
+      }
+    },
+    'previewImage': 'https://14.react.pages.academy/static/offer/14.jpg',
+    'images': [
+      'https://14.react.pages.academy/static/offer/10.jpg',
+      'https://14.react.pages.academy/static/offer/5.jpg',
+      'https://14.react.pages.academy/static/offer/13.jpg',
+      'https://14.react.pages.academy/static/offer/18.jpg',
+      'https://14.react.pages.academy/static/offer/2.jpg',
+      'https://14.react.pages.academy/static/offer/16.jpg',
+      'https://14.react.pages.academy/static/offer/11.jpg',
+      'https://14.react.pages.academy/static/offer/3.jpg',
+      'https://14.react.pages.academy/static/offer/19.jpg',
+      'https://14.react.pages.academy/static/offer/17.jpg',
+      'https://14.react.pages.academy/static/offer/4.jpg',
+      'https://14.react.pages.academy/static/offer/9.jpg',
+      'https://14.react.pages.academy/static/offer/12.jpg',
+      'https://14.react.pages.academy/static/offer/14.jpg'
+    ],
+    'title': 'The Joshua Tree House',
+    'isFavorite': false,
+    'isPremium': false,
+    'rating': 2.6,
+    'type': 'room',
+    'bedrooms': 1,
+    'maxAdults': 2,
+    'price': 150,
+    'goods': [
+      'Washer',
+      'Breakfast',
+      'Laptop friendly workspace',
+      'Towels',
+      'Air conditioning',
+      'Fridge',
+      'Baby seat'
+    ],
+    'host': {
+      'id': 25,
+      'name': 'Angelina',
+      'isPro': true,
+      'avatarUrl': 'img/avatar-angelina.jpg'
+    },
+    'description': 'A new spacious villa, one floor. All commodities, jacuzzi and beautiful scenery. Ideal for families or friends.',
+    'location': {
+      'latitude': 52.3809553943508,
+      'longitude': 4.939309666406198,
+      'zoom': 16
     },
   }
 ];
