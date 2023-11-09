@@ -1,3 +1,5 @@
+import { Icon } from 'leaflet';
+
 export type IconType = {
   url: string;
   width: number;
@@ -21,3 +23,15 @@ export const currentIconConfig: IconType = {
   anchorX: 14,
   anchorY: 40,
 };
+
+export const defaultMarker = new Icon({
+  iconUrl: defaultIconConfig.url,
+  iconSize: [defaultIconConfig.width, defaultIconConfig.height],
+  iconAnchor: [defaultIconConfig.anchorX, defaultIconConfig.anchorY],
+});
+
+export const currentMarker = new Icon({
+  iconUrl: currentIconConfig.url,
+  iconSize: [currentIconConfig.width, currentIconConfig.height],
+  iconAnchor: [currentIconConfig.anchorX, currentIconConfig.anchorY],
+});
