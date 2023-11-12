@@ -4,29 +4,35 @@ import Locations from '../../components/locations/locations';
 import { OfferPreview } from '../../types/offer-preview';
 import { insertPlural } from '../../utils/common';
 import { OffersList } from '../../components/offers-list/offers-list';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { City } from '../../types/city';
 import { Map } from '../../components/map/map';
 import { EpmtyList } from '../../components/empty-list/empty-list';
 import classNames from 'classnames';
 import { useSearchParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setActiveCity } from '../../store/actions';
 
-type MainProp = {
-  offers: OfferPreview[];
-}
+function MainScreen(): JSX.Element {
+  const dispatch = useAppDispatch();
 
-function MainScreen({offers}: MainProp): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
+  const activeCity = useAppSelector((state) => state.activeCity);
 
-  const [searchParams, ] = useSearchParams({city: 'Amsterdam'});
-  const activeCity = searchParams.get('city') as City['name'];
+  const [searchParams, ] = useSearchParams({city: activeCity});
+  const activeCityParam = searchParams.get('city') as City['name'];
+
+  useEffect(() => {
+    dispatch(setActiveCity(activeCityParam)); // - хотела менять глобальное состояние activeCity.
+  }, [activeCityParam, dispatch]);
+
   const locationActiveCity = offers.find(({city}) => city.name === activeCity)?.city as City; //пока не поняла как типизировать если не через as
 
-  const [activeCard, setActiveCard] = useState<OfferPreview| null>(null);
+  const [activeCard, setActiveCard] = useState<OfferPreview['id'] | null>(null);
 
-  function handleCardHover(offer: OfferPreview | null) {
-    setActiveCard(offer);
+  function handleCardHover(id: OfferPreview['id'] | null) {
+    setActiveCard(id);
   }
-
   const filteredOffersByCity = offers.filter((offer) => offer.city.name === activeCity);
 
   const offersLength = filteredOffersByCity.length;
@@ -47,13 +53,11 @@ function MainScreen({offers}: MainProp): JSX.Element {
       >
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <Locations
-            activeCity={activeCity}
-          />
+          <Locations/>
         </div>
         <div className="cities">
           {
-            !offersLength ? <EpmtyList activeCity={activeCity} /> :
+            !offersLength ? <EpmtyList/> :
               (
                 <div className="cities__places-container container">
                   <section className="cities__places places">

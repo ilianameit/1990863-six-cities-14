@@ -1,14 +1,10 @@
 import { Link } from 'react-router-dom';
 import { CityName } from '../../const/const';
-import { City } from '../../types/city';
 import classNames from 'classnames';
+import { useAppSelector } from '../../hooks';
 
-//getParametr исправить маршрутизацию
-type LocationsProp = {
-  activeCity: City['name'];
-}
-//остаются странные полосы при переключении города
-function Locations({activeCity, }: LocationsProp): JSX.Element {
+function Locations(): JSX.Element {
+  const activeCity = useAppSelector((state) => state.activeCity);
   return(
     <section className="locations container">
       <ul className="locations__list tabs__list">
