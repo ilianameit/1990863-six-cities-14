@@ -9,7 +9,6 @@ type OffersListProps = {
   onCardHover?: (offer: OfferPreview| null) => void;
 };
 export function OffersList({block, offers, onCardHover}: OffersListProps): JSX.Element {
-
   return(
     <div className={classNames(
       'places__list',
