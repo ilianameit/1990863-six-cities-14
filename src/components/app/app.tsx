@@ -8,19 +8,15 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import { HelmetProvider } from 'react-helmet-async';
-import { Offer } from '../../types/offer';
-type AppProps = {
-  offers: Offer[];
-}
 
-function App({offers}: AppProps): JSX.Element {
+function App(): JSX.Element {
   return (
     <HelmetProvider>
 
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
-          <Route path={AppRoutes.Main} element={<MainScreen offers={offers}/>}/>
+          <Route path={AppRoutes.Main} element={<MainScreen/>}/>
           <Route path={AppRoutes.Login} element={<LoginScreen />}/>
           <Route
             path={AppRoutes.Favorites}
@@ -28,11 +24,11 @@ function App({offers}: AppProps): JSX.Element {
               <PrivateRoute
                 authorizationStatus={authorizationStatus}
               >
-                <FavoritesScreen offers={offers}/>
+                <FavoritesScreen/>
               </PrivateRoute>
             }
           />
-          <Route path={`${AppRoutes.Offer}/:id`} element={<OfferScreen offers={offers}/>}/>
+          <Route path={`${AppRoutes.Offer}/:id`} element={<OfferScreen/>}/>
           <Route path='*' element={<NotFoundScreen />}/>
 
 
