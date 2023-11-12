@@ -1,19 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
-import { OfferPreview } from '../../types/offer-preview';
 import OfferCard from '../../components/offer-card/offer-card';
 import { City } from '../../types/city';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchFavoriteOffers } from '../../store/actions';
 
-type FavoritesScreenProps = {
-  offers: OfferPreview[];
-}
-
-function FavoritesScreen({offers}: FavoritesScreenProps): JSX.Element {
+function FavoritesScreen(): JSX.Element {
+  const dispatch = useAppDispatch();
+  dispatch(fetchFavoriteOffers());
+  const favorites = useAppSelector((state) => state.favorites);
   const favoritesCity = new Set<City['name']>();
-  const favoritesOffers = offers
-    .filter((offer) => offer.isFavorite)
-    .sort((a, b) => (a.city.name > b.city.name ? 1 : -1));
+  const favoritesOffers = favorites.sort((a, b) => (a.city.name > b.city.name ? 1 : -1));
 
   favoritesOffers.map(({city}) => favoritesCity.add(city.name));
 
