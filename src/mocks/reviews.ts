@@ -2,7 +2,7 @@ import { ReviewType } from '../types/review';
 
 export const reviews: ReviewType[] = [
   {
-    'id': 1,
+    'id': '1',
     'user': {
       'id': 16,
       'isPro': true,
@@ -14,7 +14,7 @@ export const reviews: ReviewType[] = [
     'date': '2023-11-04T11:13:12.982Z'
   },
   {
-    'id': 2,
+    'id': '2',
     'user': {
       'id': 13,
       'isPro': false,
@@ -26,7 +26,7 @@ export const reviews: ReviewType[] = [
     'date': '2023-11-04T11:13:12.982Z'
   },
   {
-    'id': 3,
+    'id': '3',
     'user': {
       'id': 12,
       'isPro': true,
