@@ -13,7 +13,7 @@ type OfferScreenProps = {
 };
 function OfferScreen({offers}: OfferScreenProps): JSX.Element {
   const {id} = useParams();
-  const offer = offers.find((item) => item.id === Number(id));
+  const offer = offers.find((item) => item.id === id);
 
   if(!offer) {
     return <NotFoundScreen />;
@@ -22,7 +22,7 @@ function OfferScreen({offers}: OfferScreenProps): JSX.Element {
   const activeCity = offer?.city;
 
   const nearOffers = offers.filter((item) => (
-    item.id !== Number(id) && item.city.name === activeCity.name
+    item.id !== id && item.city.name === activeCity.name
   )).slice(0, MAX_NEAR_PLACES_COUNT);
   const {title} = offer;
 
