@@ -1,10 +1,7 @@
-import { City } from '../../types/city';
+import { useAppSelector } from '../../hooks';
 
-type EmptyProps = {
-  activeCity: City['name'];
-}
-
-export function EpmtyList({activeCity}: EmptyProps):JSX.Element {
+export function EpmtyList():JSX.Element {
+  const activeCity = useAppSelector((state) => state.activeCity);
   return(
     <div className="cities__places-container cities__places-container--empty container">
       <section className="cities__no-places">
