@@ -2,7 +2,7 @@ import { City } from './city';
 import { Location } from './location';
 
 export type OfferPreview = {
-  id: number;
+  id: string;
   city: City;
   previewImage: string;
   title: string;

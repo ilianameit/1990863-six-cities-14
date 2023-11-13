@@ -1,16 +1,26 @@
+import classNames from 'classnames';
 import { OfferPreview } from '../../types/offer-preview';
 import OfferCard from '../offer-card/offer-card';
+import { Blocks } from '../../types/blocks';
 
 type OffersListProps = {
+  block: Blocks;
   offers: OfferPreview[];
-  handleCardHover?: (offer: OfferPreview| null) => void;
+  onCardHover?: (offer: OfferPreview| null) => void;
 };
-export function OffersList({offers, handleCardHover}: OffersListProps): JSX.Element {
+export function OffersList({block, offers, onCardHover}: OffersListProps): JSX.Element {
   return(
-    <div className="cities__places-list places__list tabs__content">
+    <div className={classNames(
+      'places__list',
+      {
+        'tabs__content cities__places-list': block === 'cities',
+        'near-places__list': block === 'near'
+      }
+    )}
+    >
       {
         offers.map((offer) => (
-          <OfferCard key={offer.id} offer={offer} block='cities' onCardHover={handleCardHover} />
+          <OfferCard key={offer.id} offer={offer} block={block} onCardHover={() => onCardHover?.(offer)} />
         ))
       }
     </div>

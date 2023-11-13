@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 import { AppRoutes } from '../../const/const';
 import { OfferPreview } from '../../types/offer-preview';
-import { capitalize, getRatingWidth } from '../../utils/common';
+import { capitalize, getRatingWidth, roundRating } from '../../utils/common';
+import { Blocks } from '../../types/blocks';
+import classNames from 'classnames';
 
-type Blocks = 'cities' | 'favorites';
 
 type ImageSize = 'small' | 'large';
 
@@ -31,9 +32,14 @@ function OfferCard({offer, block, onCardHover, size = 'large'}: OfferProps): JSX
   }
   return(
     <article
-      className={`${block}__card place-card`}
-      onMouseEnter={() => handleMouseEnter}
-      onMouseLeave={() => handleMouseLeave}
+      className={classNames(
+        'place-card',
+        {'near-places__card' : block === 'near',
+          [`${block}__card`]: block !== 'near'
+        }
+      )}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {isPremium && (
         <div className="place-card__mark">
@@ -41,7 +47,13 @@ function OfferCard({offer, block, onCardHover, size = 'large'}: OfferProps): JSX
         </div>
       )}
 
-      <div className={`${block}__image-wrapper place-card__image-wrapper`}>
+      <div className={classNames(
+        'place-card__image-wrapper',
+        {'near-places__image-wrapper' : block === 'near',
+          [`${block}__image-wrapper`]:  block !== 'near'
+        }
+      )}
+      >
         <Link to={`${AppRoutes.Offer}/${id}`}>
           <img
             className="place-card__image"
@@ -66,7 +78,7 @@ function OfferCard({offer, block, onCardHover, size = 'large'}: OfferProps): JSX
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: getRatingWidth(rating)}}></span>
+            <span style={{width: getRatingWidth(roundRating(rating))}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

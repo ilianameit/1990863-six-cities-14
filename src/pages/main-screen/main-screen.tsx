@@ -7,22 +7,19 @@ import { OffersList } from '../../components/offers-list/offers-list';
 import { useState } from 'react';
 import { City } from '../../types/city';
 import { Map } from '../../components/map/map';
-import { EpmtyList } from '../../components/epmty-list/empty-list';
-import cn from 'classnames';
+import { EpmtyList } from '../../components/empty-list/empty-list';
+import classNames from 'classnames';
+import { useSearchParams } from 'react-router-dom';
 
 type MainProp = {
   offers: OfferPreview[];
 }
 
 function MainScreen({offers}: MainProp): JSX.Element {
-  const [activeCity, setActiveCity] = useState<City['name']>('Amsterdam');
-  const locationActiveCity = offers.find(({city}) => city.name === activeCity)?.city as City;
-  console.log(locationActiveCity)
 
-  function handleCityClick(city: City['name']) {
-    //evt.Deafault ????
-    setActiveCity(city);
-  }
+  const [searchParams, ] = useSearchParams({city: 'Amsterdam'});
+  const activeCity = searchParams.get('city') as City['name'];
+  const locationActiveCity = offers.find(({city}) => city.name === activeCity)?.city as City; //пока не поняла как типизировать если не через as
 
   const [activeCard, setActiveCard] = useState<OfferPreview| null>(null);
 
@@ -42,7 +39,7 @@ function MainScreen({offers}: MainProp): JSX.Element {
 
       <Header/>
 
-      <main className={cn(
+      <main className={classNames(
         'page__main',
         'page__main--index',
         {'page__main--index-empty': !offersLength}
@@ -52,7 +49,6 @@ function MainScreen({offers}: MainProp): JSX.Element {
         <div className="tabs">
           <Locations
             activeCity={activeCity}
-            onCityClick={handleCityClick}
           />
         </div>
         <div className="cities">
@@ -78,7 +74,7 @@ function MainScreen({offers}: MainProp): JSX.Element {
                         <li className="places__option" tabIndex={0}>Top rated first</li>
                       </ul>
                     </form>
-                    <OffersList offers={filteredOffersByCity} handleCardHover={handleCardHover}/>
+                    <OffersList block='cities' offers={filteredOffersByCity} onCardHover={handleCardHover}/>
                   </section>
                   <div className="cities__right-section">
                     <Map

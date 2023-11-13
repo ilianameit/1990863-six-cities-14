@@ -9,6 +9,9 @@ const COUNT_OFFER_IMAGES = 6;
 const MAX_COMMENT_LENGTH = 300;
 const MIN_COMMENT_LENGTH = 50;
 
+const MAX_COMMENT_COUNT = 10;
+const MAX_NEAR_PLACES_COUNT = 3;
+
 const ratingStarsName = {
   '1': 'terribly',
   '2': 'badly',
@@ -40,6 +43,8 @@ export {
   COUNT_OFFER_IMAGES,
   MAX_COMMENT_LENGTH,
   MIN_COMMENT_LENGTH,
+  MAX_COMMENT_COUNT,
+  MAX_NEAR_PLACES_COUNT,
   ratingStarsName,
   AppRoutes,
   AuthorizationStatus,

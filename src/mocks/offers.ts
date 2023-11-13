@@ -2,7 +2,7 @@ import { Offer } from '../types/offer';
 
 export const offers: Offer[] = [
   {
-    id: 1,
+    id: '1',
     city: {
       name: 'Dusseldorf',
       location: {
@@ -55,7 +55,7 @@ export const offers: Offer[] = [
   },
 
   {
-    id: 2,
+    id: '2',
     city: {
       name: 'Amsterdam',
       location: {
@@ -108,7 +108,7 @@ export const offers: Offer[] = [
     },
   },
   {
-    id: 3,
+    id: '3',
     city: {
       name: 'Brussels',
       location: {
@@ -168,7 +168,7 @@ export const offers: Offer[] = [
     },
   },
   {
-    id: 4,
+    id: '4',
     city: {
       name: 'Paris',
       location: {
@@ -228,7 +228,7 @@ export const offers: Offer[] = [
     },
   },
   {
-    'id': 5,
+    'id': '5',
     'city': {
       'name': 'Amsterdam',
       'location': {
@@ -281,7 +281,7 @@ export const offers: Offer[] = [
     },
   },
   {
-    'id': 6,
+    'id': '6',
     'city': {
       'name': 'Amsterdam',
       'location': {
@@ -336,7 +336,7 @@ export const offers: Offer[] = [
     },
   },
   {
-    'id': 7,
+    'id': '7',
     'city': {
       'name': 'Amsterdam',
       'location': {
@@ -388,7 +388,7 @@ export const offers: Offer[] = [
     },
   },
   {
-    'id': 8,
+    'id': '8',
     'city': {
       'name': 'Amsterdam',
       'location': {

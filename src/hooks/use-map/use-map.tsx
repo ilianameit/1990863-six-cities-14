@@ -3,7 +3,7 @@ import { City } from '../../types/city';
 import { Map, TileLayer } from 'leaflet';
 import { TileLayerSettings } from './use-map.const';
 
-function useMap(
+export function useMap(
   mapRef: MutableRefObject<HTMLElement | null>,
   city: City
 ): Map | null {
@@ -33,5 +33,3 @@ function useMap(
 
   return map;
 }
-
-export default useMap;
