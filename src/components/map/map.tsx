@@ -12,7 +12,7 @@ type MapProps = {
   block: 'cities' | 'offer';
   city: City ;
   offers: OfferPreview[];
-  selectedOffer: OfferPreview | Offer | null;
+  selectedOffer: Offer['id'] | null;
 };
 
 export function Map({block, city, offers, selectedOffer}: MapProps): JSX.Element {
@@ -37,7 +37,7 @@ export function Map({block, city, offers, selectedOffer}: MapProps): JSX.Element
 
         marker
           .setIcon(
-            selectedOffer && offer.id === selectedOffer.id
+            selectedOffer && offer.id === selectedOffer
               ? currentMarker
               : defaultMarker
           )

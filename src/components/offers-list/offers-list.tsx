@@ -6,7 +6,7 @@ import { Blocks } from '../../types/blocks';
 type OffersListProps = {
   block: Blocks;
   offers: OfferPreview[];
-  onCardHover?: (offer: OfferPreview| null) => void;
+  onCardHover?: (offer: OfferPreview['id']| null) => void;
 };
 export function OffersList({block, offers, onCardHover}: OffersListProps): JSX.Element {
   return(
@@ -20,7 +20,7 @@ export function OffersList({block, offers, onCardHover}: OffersListProps): JSX.E
     >
       {
         offers.map((offer) => (
-          <OfferCard key={offer.id} offer={offer} block={block} onCardHover={() => onCardHover?.(offer)} />
+          <OfferCard key={offer.id} offer={offer} block={block} onCardHover={() => onCardHover?.(offer.id)} />
         ))
       }
     </div>
