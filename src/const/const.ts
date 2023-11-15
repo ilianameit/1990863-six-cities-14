@@ -38,6 +38,13 @@ const CityName = ['Paris','Cologne','Brussels','Amsterdam','Hamburg','Dusseldorf
 const authorizationStatus = AuthorizationStatus.Auth;
 const isLogged = checkAuthorizationStatus(authorizationStatus);
 
+const SortingMap = {
+  Popular: 'Popular',
+  LowToHigh: 'Price: low to high',
+  HighToLow: 'Price: high to low',
+  TopRated: 'Top rated first'
+} as const;
+
 export {
   SETTING,
   COUNT_OFFER_IMAGES,
@@ -50,5 +57,6 @@ export {
   AuthorizationStatus,
   CityName,
   authorizationStatus,
-  isLogged
+  isLogged,
+  SortingMap
 };
