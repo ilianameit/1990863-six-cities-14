@@ -1,1 +1,1 @@
-export type Blocks = 'cities' | 'favorites' | 'near';
+export type BlocksName = 'cities' | 'favorites' | 'near';

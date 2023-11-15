@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 import { OfferPreview } from '../../types/offer-preview';
 import OfferCard from '../offer-card/offer-card';
-import { Blocks } from '../../types/blocks';
+import { BlocksName } from '../../types/blocks';
 
 type OffersListProps = {
-  block: Blocks;
+  block: BlocksName;
   offers: OfferPreview[];
   onCardHover?: (offer: OfferPreview['id']| null) => void;
 };
