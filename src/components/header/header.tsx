@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 import Logo from '../logo/logo';
 import { AppRoutes, isLogged} from '../../const/const';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchFavoriteOffers } from '../../store/actions';
+import { useEffect } from 'react';
 
 type HeaderProp = {
   withoutLogin?: boolean;
@@ -9,8 +11,11 @@ type HeaderProp = {
 
 function Header({withoutLogin}: HeaderProp): JSX.Element {
   //доделать отрисовку количества
+  const dispatch = useAppDispatch();
   const favorites = useAppSelector((state) => state.favorites);
-
+  useEffect(() => {
+    dispatch(fetchFavoriteOffers());
+  }, [dispatch]);
   return(
     <header className="header">
       <div className="container">
