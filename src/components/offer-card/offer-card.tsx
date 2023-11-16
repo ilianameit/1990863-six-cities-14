@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { AppRoutes } from '../../const/const';
 import { OfferPreview } from '../../types/offer-preview';
 import { capitalize, getRatingWidth, roundRating } from '../../utils/common';
-import { Blocks } from '../../types/blocks';
+import { BlocksName } from '../../types/blocks';
 import classNames from 'classnames';
 
 
@@ -10,7 +10,7 @@ type ImageSize = 'small' | 'large';
 
 type OfferProps = {
   offer: OfferPreview;
-  block: Blocks;
+  block: BlocksName;
   onCardHover?: (offer: OfferPreview['id'] | null) => void;
   size?: ImageSize;
 };

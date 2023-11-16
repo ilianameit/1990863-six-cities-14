@@ -11,7 +11,10 @@ import { EpmtyList } from '../../components/empty-list/empty-list';
 import classNames from 'classnames';
 import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setActiveCity } from '../../store/actions';
+import { setActiveCity, setSortingItem } from '../../store/actions';
+import { SortingOffers } from '../../components/sorting-offfers/sorting-offers';
+import { Sorting } from '../../types/sorting';
+import { getSortedOffers } from '../../store/selectors';
 
 function MainScreen(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -26,7 +29,7 @@ function MainScreen(): JSX.Element {
     dispatch(setActiveCity(activeCityParam)); // - хотела менять глобальное состояние activeCity.
   }, [activeCityParam, dispatch]);
 
-  const locationActiveCity = offers.find(({city}) => city.name === activeCity)?.city as City; //пока не поняла как типизировать если не через as
+  const locationActiveCity = offers.find(({city}) => city.name === activeCity)?.city as City; //update: offera с локацией города может не быть
 
   const [activeCard, setActiveCard] = useState<OfferPreview['id'] | null>(null);
 
@@ -36,6 +39,14 @@ function MainScreen(): JSX.Element {
   const filteredOffersByCity = offers.filter((offer) => offer.city.name === activeCity);
 
   const offersLength = filteredOffersByCity.length;
+
+  const sortingByItem = useAppSelector((state) => state.sotringByItem);
+  function handleSortingItemClick(type: Sorting) {
+    dispatch(setSortingItem(type));
+  }
+
+  const sortedOffers = getSortedOffers({offers: filteredOffersByCity, sortingItem: sortingByItem});
+
   return (
     //header авторизован/неавторизован
     <div className="page page--gray page--main">
@@ -53,32 +64,18 @@ function MainScreen(): JSX.Element {
       >
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <Locations/>
+          <Locations activeCity={activeCity} />
         </div>
         <div className="cities">
           {
-            !offersLength ? <EpmtyList/> :
+            !offersLength ? <EpmtyList activeCity={activeCity} /> :
               (
                 <div className="cities__places-container container">
                   <section className="cities__places places">
                     <h2 className="visually-hidden">Places</h2>
                     <b className="places__found">{offersLength} place{insertPlural(offersLength)} to stay in {activeCity}</b>
-                    <form className="places__sorting" action="#" method="get">
-                      <span className="places__sorting-caption">Sort by</span>
-                      <span className="places__sorting-type" tabIndex={0}>
-                      &nbsp;Popular
-                        <svg className="places__sorting-arrow" width="7" height="4">
-                          <use xlinkHref="#icon-arrow-select"></use>
-                        </svg>
-                      </span>
-                      <ul className="places__options places__options--custom places__options--opened">
-                        <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                        <li className="places__option" tabIndex={0}>Price: low to high</li>
-                        <li className="places__option" tabIndex={0}>Price: high to low</li>
-                        <li className="places__option" tabIndex={0}>Top rated first</li>
-                      </ul>
-                    </form>
-                    <OffersList block='cities' offers={filteredOffersByCity} onCardHover={handleCardHover}/>
+                    <SortingOffers sortingByItem={sortingByItem} onChange={handleSortingItemClick}/>
+                    <OffersList block='cities' offers={sortedOffers} onCardHover={handleCardHover}/>
                   </section>
                   <div className="cities__right-section">
                     <Map

@@ -3,9 +3,10 @@ import { City } from '../types/city';
 import { OfferPreview } from '../types/offer-preview';
 import { offers } from '../mocks/offers';
 import { ReviewType } from '../types/review';
-import { dropOffer, fetchNearOffers, fetchOffer, fetchOffers, fetchReviews, setActiveCity, fetchFavoriteOffers } from './actions';
+import { dropOffer, fetchNearOffers, fetchOffer, fetchOffers, fetchReviews, setActiveCity, fetchFavoriteOffers, setSortingItem } from './actions';
 import { reviews } from '../mocks/reviews';
 import { Offer } from '../types/offer';
+import { Sorting } from '../types/sorting';
 
 const initialState: {
   activeCity: City['name'];
@@ -14,13 +15,15 @@ const initialState: {
   offer: Offer| null;
   reviews: ReviewType[];
   favorites: OfferPreview[];
+  sotringByItem: Sorting;
 } = {
   activeCity: 'Paris',
   offers,
   nearOffers: [],
   offer: null,
   reviews: [],
-  favorites: []
+  favorites: [],
+  sotringByItem: 'Popular',
 };
 
 const reducer = createReducer(initialState, (bulder) => {
@@ -46,6 +49,9 @@ const reducer = createReducer(initialState, (bulder) => {
     })
     .addCase(fetchFavoriteOffers, (state) => {
       state.favorites = offers.filter((offer) => offer.isFavorite);
+    })
+    .addCase(setSortingItem, (state, action) => {
+      state.sotringByItem = action.payload;
     });
 });
 

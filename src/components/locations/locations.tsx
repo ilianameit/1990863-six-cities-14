@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom';
 import { CityName } from '../../const/const';
 import classNames from 'classnames';
-import { useAppSelector } from '../../hooks';
+import { City } from '../../types/city';
 
-function Locations(): JSX.Element {
-  const activeCity = useAppSelector((state) => state.activeCity);
+type LocationsProp = {
+  activeCity: City['name'];
+}
+
+function Locations({activeCity}: LocationsProp): JSX.Element {
   return(
     <section className="locations container">
       <ul className="locations__list tabs__list">
