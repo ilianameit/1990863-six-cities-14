@@ -5,7 +5,7 @@ import { useMap } from '../../hooks/use-map/use-map';
 import { currentMarker, defaultMarker } from './map.const';
 import { OfferPreview } from '../../types/offer-preview';
 import 'leaflet/dist/leaflet.css';
-import styles from './map.style.css';
+import styles from './map.module.css';
 import { Offer } from '../../types/offer';
 
 type MapProps = {
