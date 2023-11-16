@@ -12,7 +12,9 @@ function FavoritesScreen(): JSX.Element {
   const favoritesCity = new Set<City['name']>();
   const sortedFavorites = favoriteOffersSelector(favorites);
 
-  sortedFavorites.map(({city}) => favoritesCity.add(city.name));
+  sortedFavorites.forEach(({city}) => {
+    favoritesCity.add(city.name);
+  });
 
   return(
     <div className="page">

@@ -17,7 +17,7 @@ export const getSortedOffers = createSelector(
   (offers, sortingItem) => {
     switch (sortingItem) {
       case 'Popular':
-        return offers.slice();
+        return offers;
       case 'HighToLow':
         return offers.slice().sort((a, b) => b.price - a.price);
       case 'LowToHigh':
