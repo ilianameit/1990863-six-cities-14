@@ -45,6 +45,15 @@ const SortingMap = {
   TopRated: 'Top rated first'
 } as const;
 
+
+export enum APIRoute {
+  Offers = '/offers',
+  Favorite = '/favorite',
+  Comments = '/comments',
+  Login = '/login',
+  Logout = '/logout',
+}
+
 export {
   SETTING,
   COUNT_OFFER_IMAGES,

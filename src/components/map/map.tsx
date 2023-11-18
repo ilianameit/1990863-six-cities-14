@@ -20,6 +20,12 @@ export function Map({block, city, offers, selectedOffer}: MapProps): JSX.Element
   const map = useMap(mapRef, city);
 
   useEffect(() => {
+    if(map) {
+      map.setView([city.location.latitude, city.location.longitude], city.location.zoom); //без этого не переключается карта при смене города
+    }
+  }, [map, city]);
+
+  useEffect(() => {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
 
