@@ -4,7 +4,7 @@ export const reviews: ReviewType[] = [
   {
     'id': '1',
     'user': {
-      'id': 16,
+
       'isPro': true,
       'name': 'Mollie',
       'avatarUrl': 'https://14.react.pages.academy/static/avatar/7.jpg'
@@ -16,7 +16,7 @@ export const reviews: ReviewType[] = [
   {
     'id': '2',
     'user': {
-      'id': 13,
+
       'isPro': false,
       'name': 'Zak',
       'avatarUrl': 'https://14.react.pages.academy/static/avatar/4.jpg'
@@ -28,7 +28,7 @@ export const reviews: ReviewType[] = [
   {
     'id': '3',
     'user': {
-      'id': 12,
+
       'isPro': true,
       'name': 'Isaac',
       'avatarUrl': 'https://14.react.pages.academy/static/avatar/3.jpg'
