@@ -2,11 +2,12 @@ import { createReducer } from '@reduxjs/toolkit';
 import { City } from '../types/city';
 import { OfferPreview } from '../types/offer-preview';
 import { ReviewType } from '../types/review';
-import { dropOffer, fetchNearOffers, fetchOffer, fetchReviews, setActiveCity, fetchFavoriteOffers, setSortingItem, loadOffers, setOffersLoadingStatus } from './actions';
-import { reviews } from '../mocks/reviews';
+import { dropOffer, fetchNearOffers, fetchOffer, fetchReviews, setActiveCity, fetchFavoriteOffers, setSortingItem, loadOffers, setOffersLoadingStatus, requireAuthorization, setError } from './actions';
 import { Offer } from '../types/offer';
 import { Sorting } from '../types/sorting';
 import { offers } from '../mocks/offers';
+import { AuthorizationStatus } from '../const/const';
+import { UserData } from '../types/user-data';
 
 const initialState: {
   activeCity: City['name'];
@@ -17,6 +18,9 @@ const initialState: {
   favorites: OfferPreview[];
   sotringByItem: Sorting;
   isOffersLoading: boolean;
+  authorizationStatus: AuthorizationStatus;
+  user: UserData | null;
+  error: string | null;
 } = {
   activeCity: 'Paris',
   offers: [],
@@ -25,7 +29,10 @@ const initialState: {
   reviews: [],
   favorites: [],
   sotringByItem: 'Popular',
-  isOffersLoading: false
+  isOffersLoading: false,
+  authorizationStatus: AuthorizationStatus.Unknown,
+  user: null,
+  error: null,
 };
 
 const reducer = createReducer(initialState, (bulder) => {
@@ -36,8 +43,8 @@ const reducer = createReducer(initialState, (bulder) => {
     .addCase(fetchNearOffers, (state, action) => {
       state.nearOffers = offers.filter((offer) => offer.id !== action.payload);
     })
-    .addCase(fetchReviews, (state) => {
-      state.reviews = reviews;
+    .addCase(fetchReviews, (state, action) => {
+      state.reviews = action.payload;
     })
     .addCase(dropOffer, (state) => {
       state.offer = null;
@@ -57,6 +64,12 @@ const reducer = createReducer(initialState, (bulder) => {
     })
     .addCase(setOffersLoadingStatus, (state, action) => {
       state.isOffersLoading = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
     });
 });
 

@@ -1,4 +1,4 @@
-import { MAX_COMMENT_COUNT, isLogged } from '../../const/const';
+import { MAX_COMMENT_COUNT} from '../../const/const';
 import { reviews } from '../../mocks/reviews';
 import { ReviewForm } from '../review-from/review-form';
 import { Review } from '../review/review';
@@ -15,7 +15,7 @@ export function ReviewsList(): JSX.Element{
           <Review key={review.id} review={review}/>
         ))}
       </ul>
-      {isLogged && <ReviewForm />}
+      {1 && <ReviewForm />}
     </section>
   );
 }

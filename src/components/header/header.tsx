@@ -1,18 +1,22 @@
 import { Link } from 'react-router-dom';
 import Logo from '../logo/logo';
-import { AppRoutes, isLogged} from '../../const/const';
+import { AppRoutes} from '../../const/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchFavoriteOffers } from '../../store/actions';
 import { useEffect } from 'react';
+import { checkAuthorizationStatus } from '../../utils/authorization-status/check-authorization-status';
 
 type HeaderProp = {
   withoutLogin?: boolean;
 }
 
 function Header({withoutLogin}: HeaderProp): JSX.Element {
-  //доделать отрисовку количества
   const dispatch = useAppDispatch();
   const favorites = useAppSelector((state) => state.favorites);
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus
+  );
+  const isLogged = checkAuthorizationStatus(authorizationStatus);
   useEffect(() => {
     dispatch(fetchFavoriteOffers());
   }, [dispatch]);
