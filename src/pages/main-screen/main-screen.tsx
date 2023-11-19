@@ -7,7 +7,7 @@ import { OffersList } from '../../components/offers-list/offers-list';
 import { useEffect, useState } from 'react';
 import { City } from '../../types/city';
 import { Map } from '../../components/map/map';
-import { EpmtyList } from '../../components/empty-list/empty-list';
+import { EmptyList } from '../../components/empty-list/empty-list';
 import classNames from 'classnames';
 import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -28,7 +28,6 @@ function MainScreen(): JSX.Element {
   useEffect(() => {
     dispatch(setActiveCity(activeCityParam)); // - хотела менять глобальное состояние activeCity.
   }, [activeCityParam, dispatch]);
-
   const locationActiveCity = offers.find(({city}) => city.name === activeCity)?.city as City; //update: offera с локацией города может не быть
 
   const [activeCard, setActiveCard] = useState<OfferPreview['id'] | null>(null);
@@ -68,7 +67,7 @@ function MainScreen(): JSX.Element {
         </div>
         <div className="cities">
           {
-            !offersLength ? <EpmtyList activeCity={activeCity} /> :
+            !offersLength ? <EmptyList activeCity={activeCity} /> :
               (
                 <div className="cities__places-container container">
                   <section className="cities__places places">

@@ -3,8 +3,6 @@ import { City } from '../types/city';
 import { Offer } from '../types/offer';
 import { Sorting } from '../types/sorting';
 
-export const fetchOffers = createAction('offers/fetch');
-
 export const fetchOffer = createAction<Offer['id']>('offers/getOffer');
 
 export const fetchNearOffers = createAction<Offer['id']>('nearOffers/fetch');
@@ -18,3 +16,6 @@ export const setActiveCity = createAction<City['name']>('offers/setActiveCity');
 export const fetchFavoriteOffers = createAction('favorites/fetch');
 
 export const setSortingItem = createAction<Sorting>('sorting/setSortingItem');
+
+export const loadOffers = createAction<Offer[]>('data/loadOffers');
+export const setOffersLoadingStatus = createAction<boolean>('data/setOffersLoadingStatus');

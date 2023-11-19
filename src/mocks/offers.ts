@@ -41,7 +41,6 @@ export const offers: Offer[] = [
       'Breakfast'
     ],
     host: {
-      id: 25,
       name: 'Angelina',
       isPro: true,
       avatarUrl: 'img/avatar-angelina.jpg'
@@ -95,7 +94,6 @@ export const offers: Offer[] = [
       'Washer'
     ],
     host: {
-      id: 25,
       name: 'Angelina',
       isPro: true,
       avatarUrl: 'img/avatar-angelina.jpg'
@@ -155,7 +153,6 @@ export const offers: Offer[] = [
       'Dishwasher'
     ],
     host: {
-      id: 25,
       name: 'Angelina',
       isPro: true,
       avatarUrl: 'img/avatar-angelina.jpg'
@@ -215,7 +212,6 @@ export const offers: Offer[] = [
       'Towels'
     ],
     host: {
-      id: 25,
       name: 'Angelina',
       isPro: true,
       avatarUrl: 'img/avatar-angelina.jpg'
@@ -268,7 +264,6 @@ export const offers: Offer[] = [
       'Washer'
     ],
     'host': {
-      'id': 25,
       'name': 'Angelina',
       'isPro': true,
       'avatarUrl': 'img/avatar-angelina.jpg'
@@ -323,7 +318,6 @@ export const offers: Offer[] = [
       'Air conditioning'
     ],
     'host': {
-      'id': 25,
       'name': 'Angelina',
       'isPro': true,
       'avatarUrl': 'img/avatar-angelina.jpg'
@@ -375,7 +369,6 @@ export const offers: Offer[] = [
       'Laptop friendly workspace'
     ],
     'host': {
-      'id': 25,
       'name': 'Angelina',
       'isPro': true,
       'avatarUrl': 'img/avatar-angelina.jpg'
@@ -432,7 +425,6 @@ export const offers: Offer[] = [
       'Baby seat'
     ],
     'host': {
-      'id': 25,
       'name': 'Angelina',
       'isPro': true,
       'avatarUrl': 'img/avatar-angelina.jpg'

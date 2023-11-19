@@ -8,8 +8,25 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import { HelmetProvider } from 'react-helmet-async';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchOffersAction } from '../../store/api-actions';
+import { useEffect } from 'react';
 
 function App(): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchOffersAction());
+  }, [dispatch]);
+
+  const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
+
+  if (isOffersLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
   return (
     <HelmetProvider>
 
