@@ -8,7 +8,8 @@ import { MAX_NEAR_PLACES_COUNT } from '../../const/const';
 import { OffersList } from '../../components/offers-list/offers-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
-import { dropOffer, fetchNearOffers, fetchOffer } from '../../store/actions';
+import { dropOffer, fetchNearOffers } from '../../store/actions';
+import { fetchOfferAction } from '../../store/api-actions';
 
 function OfferScreen(): JSX.Element {
   const {id} = useParams();
@@ -21,7 +22,7 @@ function OfferScreen(): JSX.Element {
 
   useEffect(() => {
     if(id) {
-      dispatch(fetchOffer(id));
+      dispatch(fetchOfferAction(id));
       dispatch(fetchNearOffers(id));
     }
     return () => {

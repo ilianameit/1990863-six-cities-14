@@ -39,6 +39,19 @@ export const fetchOffersAction = createAsyncThunk<
   },
 );
 
+export const fetchOfferAction = createAsyncThunk<
+  Offer,
+  Offer['id'],
+  AsyncActionType
+>(
+  'data/fetchOffer',
+  async (id, {extra: api, dispatch}) => {
+    const {data} = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
+    dispatch({type: 'offers/getOffer', payload: data});
+    return data;
+  }
+);
+
 export const checkAuthAction = createAsyncThunk<
   void,
   undefined,

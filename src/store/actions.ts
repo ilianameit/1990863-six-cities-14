@@ -6,7 +6,7 @@ import { AuthorizationStatus } from '../const/const';
 import { ReviewType } from '../types/review';
 import { User } from '../types/user';
 
-export const fetchOffer = createAction<Offer['id']>('offers/getOffer');
+export const fetchOffer = createAction<Offer>('offers/getOffer');
 
 export const fetchNearOffers = createAction<Offer['id']>('nearOffers/fetch');
 
