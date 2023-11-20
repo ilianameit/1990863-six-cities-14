@@ -1,18 +1,21 @@
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import Header from '../../components/header/header';
 import { AppRoutes } from '../../const/const';
-import React, { FormEvent, useRef } from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { checkAuthorizationStatus } from '../../utils/authorization-status/check-authorization-status';
 import { loginAction } from '../../store/api-actions';
+import { AuthData } from '../../types/auth-data';
 
 function LoginScreen(): JSX.Element {
-  const loginRef = useRef<HTMLInputElement | null>(null);
-  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const [valid, setValid] = useState(false);
+  const [formData, setFormData] = useState<AuthData>({
+    email: '',
+    password: '',
+  });
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const authorizationStatus = useAppSelector(
     (state) => state.authorizationStatus
@@ -21,13 +24,31 @@ function LoginScreen(): JSX.Element {
 
   const isLogged = checkAuthorizationStatus(authorizationStatus);
 
+  const isValidForm = (form: AuthData) => {
+    const validEmail = new RegExp(/^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w+)$/);
+    const validPass = new RegExp(/^(?=.*\d)(?=.*[a-z]).*$/);
+    const isValidEmail = validEmail.test(form.email);
+    const isValidPass = validPass.test(form.password);
+
+    return isValidEmail && isValidPass;
+  };
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+    if (isValidForm({ ...formData, [name]: value })) {
+      setValid(true);
+    } else {
+      setValid(false);
+    }
+  };
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-
-    if (loginRef.current !== null && passwordRef.current !== null) {
+    if (valid) {
       dispatch(loginAction({
-        email: loginRef.current.value,
-        password: passwordRef.current.value
+        email: formData.email,
+        password: formData.password
       }));
     }
   };
@@ -56,28 +77,30 @@ function LoginScreen(): JSX.Element {
                     <div className="login__input-wrapper form__input-wrapper">
                       <label className="visually-hidden">E-mail</label>
                       <input
+                        onChange={handleInputChange}
+                        value={formData.email}
                         className="login__input form__input"
                         type="email"
                         name="email"
                         placeholder="Email"
                         required
-                        ref={loginRef}
                       />
                     </div>
                     <div className="login__input-wrapper form__input-wrapper">
                       <label className="visually-hidden">Password</label>
                       <input
+                        onChange={handleInputChange}
+                        value={formData.password}
                         className="login__input form__input"
                         type="password"
                         name="password" placeholder="Password"
                         required
-                        ref={passwordRef}
                       />
                     </div>
                     <button
                       className="login__submit form__submit button"
                       type="submit"
-                      onClick={() => navigate(AppRoutes.Main)}
+                      disabled={!valid}
                     >
                       Sign in
                     </button>

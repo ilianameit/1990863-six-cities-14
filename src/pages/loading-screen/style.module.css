@@ -1,8 +1,3 @@
-html, body {
-  height: 100%;
-  background-image: linear-gradient(-105deg, #7ca7d5, #4481c3);
-}
-
 .spinner {
   animation: rotate 2s linear infinite;
   z-index: 2;

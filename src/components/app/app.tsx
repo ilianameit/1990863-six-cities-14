@@ -18,6 +18,9 @@ function App(): JSX.Element {
 
   useEffect(() => {
     dispatch(checkAuthAction());
+  }, [dispatch]);
+
+  useEffect(() => {
     dispatch(fetchOffersAction());
   }, [dispatch]);
 

@@ -32,23 +32,29 @@ export const fetchOffersAction = createAsyncThunk<
 >(
   'data/fetchOffers',
   async (_arg, {dispatch, extra: api}) => {
-    dispatch(setOffersLoadingStatus(true));
-    const {data} = await api.get<Offer[]>(APIRoute.Offers);
-    dispatch(setOffersLoadingStatus(false));
-    dispatch(loadOffers(data));
+    try{
+      dispatch(setOffersLoadingStatus(true));
+      const {data} = await api.get<Offer[]>(APIRoute.Offers);
+      dispatch(loadOffers(data));
+    } finally {
+      dispatch(setOffersLoadingStatus(false));
+    }
   },
 );
 
 export const fetchOfferAction = createAsyncThunk<
-  Offer,
+  void,
   Offer['id'],
   AsyncActionType
 >(
   'data/fetchOffer',
   async (id, {extra: api, dispatch}) => {
     const {data} = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
-    dispatch({type: fetchOffer.type, payload: data});
-    return data;
+    dispatch(setOffersLoadingStatus(true)); //делает кучу запросов, если поставить первой строкой перед запросом на сервер.
+    dispatch(fetchOffer(data));
+    dispatch(setOffersLoadingStatus(false));
+
+
   }
 );
 
@@ -60,7 +66,8 @@ export const checkAuthAction = createAsyncThunk<
   'user/checkAuth',
   async (_arg, {dispatch, extra: api}) => {
     try {
-      await api.get(APIRoute.Login);
+      const { data } = await api.get<UserData>(APIRoute.Login);
+      dispatch(setUser(data));
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch {
       dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
@@ -80,8 +87,8 @@ export const loginAction = createAsyncThunk<
         const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
         const {token} = data;
         saveToken(token);
-        dispatch(setUser(data));
         dispatch(requireAuthorization(AuthorizationStatus.Auth));
+        dispatch(setUser(data));
       } catch {
         dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
       }

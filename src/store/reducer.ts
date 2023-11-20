@@ -2,7 +2,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import { City } from '../types/city';
 import { OfferPreview } from '../types/offer-preview';
 import { ReviewType } from '../types/review';
-import { dropOffer, fetchNearOffers, fetchReviews, setActiveCity, fetchFavoriteOffers, setSortingItem, loadOffers, setOffersLoadingStatus, requireAuthorization, setError, fetchOffer } from './actions';
+import { dropOffer, fetchNearOffers, fetchReviews, setActiveCity, fetchFavoriteOffers, setSortingItem, loadOffers, setOffersLoadingStatus, requireAuthorization, setError, fetchOffer, setUser } from './actions';
 import { Offer } from '../types/offer';
 import { Sorting } from '../types/sorting';
 import { offers } from '../mocks/offers';
@@ -70,6 +70,9 @@ const reducer = createReducer(initialState, (bulder) => {
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;
+    })
+    .addCase(setUser, (state, action) => {
+      state.user = action.payload;
     });
 });
 

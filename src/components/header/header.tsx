@@ -13,12 +13,12 @@ type HeaderProp = {
 
 function Header({withoutLogin}: HeaderProp): JSX.Element {
   const dispatch = useAppDispatch();
-  const favorites = useAppSelector((state) => state.favorites);
-  const user = useAppSelector((state) => state.user);
   const authorizationStatus = useAppSelector(
     (state) => state.authorizationStatus
   );
   const isLogged = checkAuthorizationStatus(authorizationStatus);
+  const favorites = useAppSelector((state) => state.favorites);
+  const user = useAppSelector((state) => state.user);
   useEffect(() => {
     dispatch(fetchFavoriteOffers());
   }, [dispatch]);
@@ -43,7 +43,7 @@ function Header({withoutLogin}: HeaderProp): JSX.Element {
                     <Link className="header__nav-link header__nav-link--profile" to={AppRoutes.Favorites}>
                       <div
                         className="header__avatar-wrapper user__avatar-wrapper"
-                        style={{backgroundImage: user?.avatarUrl}}
+                        style={{backgroundImage: `url("${user?.avatarUrl}")` }}
                       >
                       </div>
                       <span className="header__user-name user__name">

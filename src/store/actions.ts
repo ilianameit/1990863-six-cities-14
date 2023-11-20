@@ -4,7 +4,7 @@ import { Offer } from '../types/offer';
 import { Sorting } from '../types/sorting';
 import { AuthorizationStatus } from '../const/const';
 import { ReviewType } from '../types/review';
-import { User } from '../types/user';
+import { UserData } from '../types/user-data';
 
 export const fetchOffer = createAction<Offer>('offers/getOffer');
 
@@ -26,6 +26,6 @@ export const setOffersLoadingStatus = createAction<boolean>('data/setOffersLoadi
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 
-export const setUser = createAction<User | null>('user/setUser');
+export const setUser = createAction<UserData | null>('user/setUser');
 
 export const setError = createAction<string | null>('page/setError');

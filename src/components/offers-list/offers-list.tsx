@@ -20,7 +20,7 @@ export function OffersList({block, offers, onCardHover}: OffersListProps): JSX.E
     >
       {
         offers.map((offer) => (
-          <OfferCard key={offer.id} offer={offer} block={block} onCardHover={() => onCardHover?.(offer.id)} />
+          <OfferCard key={offer.id} offer={offer} block={block} onCardHover={onCardHover} />
         ))
       }
     </div>
