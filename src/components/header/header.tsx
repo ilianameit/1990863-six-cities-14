@@ -1,21 +1,31 @@
 import { Link } from 'react-router-dom';
 import Logo from '../logo/logo';
-import { AppRoutes, isLogged} from '../../const/const';
+import { AppRoutes} from '../../const/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchFavoriteOffers } from '../../store/actions';
 import { useEffect } from 'react';
+import { checkAuthorizationStatus } from '../../utils/authorization-status/check-authorization-status';
+import { logoutAction } from '../../store/api-actions';
 
 type HeaderProp = {
   withoutLogin?: boolean;
 }
 
 function Header({withoutLogin}: HeaderProp): JSX.Element {
-  //доделать отрисовку количества
   const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus
+  );
+  const isLogged = checkAuthorizationStatus(authorizationStatus);
   const favorites = useAppSelector((state) => state.favorites);
+  const user = useAppSelector((state) => state.user);
   useEffect(() => {
     dispatch(fetchFavoriteOffers());
   }, [dispatch]);
+
+  const handleLogOutClick = () => {
+    dispatch(logoutAction());
+  };
   return(
     <header className="header">
       <div className="container">
@@ -31,10 +41,17 @@ function Header({withoutLogin}: HeaderProp): JSX.Element {
                 <li className="header__nav-item user">
                   {isLogged ? (
                     <Link className="header__nav-link header__nav-link--profile" to={AppRoutes.Favorites}>
-                      <div className="header__avatar-wrapper user__avatar-wrapper">
+                      <div
+                        className="header__avatar-wrapper user__avatar-wrapper"
+                        style={{backgroundImage: `url("${user?.avatarUrl}")` }}
+                      >
                       </div>
-                      <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                      <span className="header__favorite-count">{favorites.length}</span>
+                      <span className="header__user-name user__name">
+                        {user?.email}
+                      </span>
+                      <span className="header__favorite-count">
+                        {favorites.length}
+                      </span>
                     </Link>
                   ) : (
                     <Link className="header__nav-link header__nav-link--profile" to={AppRoutes.Login}>
@@ -46,9 +63,13 @@ function Header({withoutLogin}: HeaderProp): JSX.Element {
                 </li>
                 {isLogged ? (
                   <li className="header__nav-item">
-                    <a className="header__nav-link" href="#">
+                    <Link
+                      className="header__nav-link"
+                      to={AppRoutes.Main}
+                      onClick={handleLogOutClick}
+                    >
                       <span className="header__signout">Sign out</span>
-                    </a>
+                    </Link>
                   </li>
                 ) : false }
               </ul>
