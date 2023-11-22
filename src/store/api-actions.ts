@@ -3,11 +3,13 @@ import { AppDispatch, State } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { Offer } from '../types/offer';
 import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const/const';
-import { fetchOffer, loadOffers, requireAuthorization, setError, setOffersLoadingStatus, setUser } from './actions';
+import { addNewReview, fetchFavoriteOffers, fetchNearOffers, fetchOffer, fetchReviews, loadOffers, requireAuthorization, setError, setOfferLoadingStatus, setOffersLoadingStatus, setUser } from './actions';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
 import { store } from '.';
+import { OfferPreview } from '../types/offer-preview';
+import { ReviewShortType, ReviewType } from '../types/review';
 
 type AsyncActionType = {
   dispatch: AppDispatch;
@@ -48,13 +50,62 @@ export const fetchOfferAction = createAsyncThunk<
   AsyncActionType
 >(
   'data/fetchOffer',
-  async (id, {extra: api, dispatch}) => {
-    const {data} = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
-    dispatch(setOffersLoadingStatus(true)); //делает кучу запросов, если поставить первой строкой перед запросом на сервер.
-    dispatch(fetchOffer(data));
-    dispatch(setOffersLoadingStatus(false));
+  async (id, {dispatch, extra: api }) => {
+    try{
+      dispatch(setOfferLoadingStatus(true));
+      const {data} = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
+      dispatch(fetchOffer(data));
+    } finally {
+      dispatch(setOfferLoadingStatus(false));
+    }
+  }
+);
 
+export const fetchFavoriteOffersAction = createAsyncThunk<
+  void,
+  undefined,
+  AsyncActionType
+>(
+  'data/fetchFavorites',
+  async (_arg, {dispatch, extra: api }) => {
+    const {data} = await api.get<OfferPreview[]>(APIRoute.Favorite);
+    dispatch(fetchFavoriteOffers(data));
+  }
+);
 
+export const fetchNearOffersAction = createAsyncThunk<
+  void,
+  OfferPreview['id'],
+  AsyncActionType
+>(
+  'data/fetchNearby',
+  async (id, {dispatch, extra: api }) => {
+    const {data} = await api.get<OfferPreview[]>(`${APIRoute.Offers}/${id + APIRoute.Nearby}`);
+    dispatch(fetchNearOffers(data));
+  }
+);
+
+export const fetchReviewsAction = createAsyncThunk<
+  void,
+  Offer['id'],
+  AsyncActionType
+>(
+  'data/fetchReviews',
+  async (id, {dispatch, extra: api }) => {
+    const {data} = await api.get<ReviewType[]>(`${APIRoute.Comments}/${id}`);
+    dispatch(fetchReviews(data));
+  }
+);
+
+export const addNewReviewAction = createAsyncThunk<
+  void,
+  [Offer['id'], ReviewShortType],
+  AsyncActionType
+>(
+  'data/postReview',
+  async ([id, formData], {dispatch, extra: api }) => {
+    const {data} = await api.post<ReviewType>(`${APIRoute.Comments}/${id}`, formData);
+    dispatch(addNewReview(data));
   }
 );
 
@@ -75,7 +126,6 @@ export const checkAuthAction = createAsyncThunk<
   },
 );
 
-//всегда NoAuth статус
 export const loginAction = createAsyncThunk<
   void,
   AuthData,
