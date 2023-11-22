@@ -2,12 +2,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { Offer } from '../types/offer';
-import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const/const';
-import { addNewReview, fetchFavoriteOffers, fetchNearOffers, fetchOffer, fetchReviews, loadOffers, requireAuthorization, setError, setOfferLoadingStatus, setOffersLoadingStatus, setUser } from './actions';
+import { APIRoute, AuthorizationStatus } from '../const/const';
+import { addNewReview, fetchFavoriteOffers, fetchNearOffers, fetchOffer, fetchReviews, loadOffers, requireAuthorization, setOfferLoadingStatus, setOffersLoadingStatus, setUser } from './actions';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
-import { store } from '.';
 import { OfferPreview } from '../types/offer-preview';
 import { ReviewShortType, ReviewType } from '../types/review';
 
@@ -17,15 +16,6 @@ type AsyncActionType = {
   extra: AxiosInstance;
 };
 
-export const clearErrorAction = createAsyncThunk(
-  'page/clearError',
-  () => {
-    setTimeout(
-      () => store.dispatch(setError(null)),
-      TIMEOUT_SHOW_ERROR,
-    );
-  },
-);
 
 export const fetchOffersAction = createAsyncThunk<
   void,
