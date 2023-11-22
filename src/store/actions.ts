@@ -2,7 +2,7 @@ import { createAction } from '@reduxjs/toolkit';
 import { City } from '../types/city';
 import { Offer } from '../types/offer';
 import { Sorting } from '../types/sorting';
-import { AuthorizationStatus } from '../const/const';
+import { AppRoutes, AuthorizationStatus } from '../const/const';
 import { ReviewType } from '../types/review';
 import { UserData } from '../types/user-data';
 import { OfferPreview } from '../types/offer-preview';
@@ -34,3 +34,4 @@ export const setUser = createAction<UserData | null>('user/setUser');
 
 export const setError = createAction<string | null>('page/setError');
 
+export const redirectToRoute = createAction<AppRoutes>('redirectToRoute');
