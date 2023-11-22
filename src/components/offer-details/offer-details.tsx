@@ -10,6 +10,7 @@ type OfferDetailsProps = {
 export function OfferDetails({offer}: OfferDetailsProps): JSX.Element {
 
   const {
+    id,
     title,
     isFavorite,
     isPremium,
@@ -23,6 +24,10 @@ export function OfferDetails({offer}: OfferDetailsProps): JSX.Element {
     images,
     maxAdults
   } = offer;
+
+  const {isPro, avatarUrl, name: hostName} = host;
+
+  const splitedDescription = description.split('. ');
 
   return(
     <React.Fragment>
@@ -39,7 +44,7 @@ export function OfferDetails({offer}: OfferDetailsProps): JSX.Element {
               {title}
             </h1>
             <button className={`offer__bookmark-button button ${isFavorite && 'offer__bookmark-button--active'}`} type="button" onClick={() => ({/*при авторизации убирать кнопку, иначе направить на стр авторизации */})}>
-              <svg className="offer__bookmark-icon" width="31" height="33">
+              <svg className="offer__bookmark-icon" width={31} height={33}>
                 <use xlinkHref="#icon-bookmark"></use>
               </svg>
               <span className="visually-hidden">To bookmarks</span>
@@ -80,23 +85,24 @@ export function OfferDetails({offer}: OfferDetailsProps): JSX.Element {
           <div className="offer__host">
             <h2 className="offer__host-title">Meet the host</h2>
             <div className="offer__host-user user">
-              <div className={`offer__avatar-wrapper user__avatar-wrapper ${host.isPro && 'offer__avatar-wrapper--pro'}`}>
-                <img className="offer__avatar user__avatar" src={host.avatarUrl} width="74" height="74" alt="Host avatar"/>
+              <div className={`offer__avatar-wrapper user__avatar-wrapper ${isPro && 'offer__avatar-wrapper--pro'}`}>
+                <img className="offer__avatar user__avatar" src={avatarUrl} width={74} height={74} alt="Host avatar"/>
               </div>
               <span className="offer__user-name">
-                {host.name}
+                {hostName}
               </span>
-              {host.isPro && <span className="offer__user-status">Pro</span>}
+              {isPro && <span className="offer__user-status">Pro</span>}
             </div>
             <div className="offer__description">
-              {description.split('. ').map((paragraph) => (
+              {splitedDescription.map((paragraph, index) => (
                 <p key={paragraph} className="offer__text">
-                  {paragraph}.
+                  {paragraph}
+                  {index < splitedDescription.length - 1 ? '.' : ''}
                 </p>
               ))}
             </div>
           </div>
-          <ReviewsList />
+          <ReviewsList idOffer={id}/>
         </div>
       </div>
     </React.Fragment>

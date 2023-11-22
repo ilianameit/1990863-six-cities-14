@@ -1,27 +1,51 @@
-import { ChangeEvent, Fragment, useState } from 'react';
+import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
 import { MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH, ratingStarsName } from '../../const/const';
-
-export function ReviewForm(): JSX.Element {
-  const [comment, setComment] = useState('');
-  const [rating, setRating] = useState('');
+import { OfferPreview } from '../../types/offer-preview';
+import { useAppDispatch } from '../../hooks';
+import { ReviewShortType } from '../../types/review';
+import { addNewReviewAction } from '../../store/api-actions';
+type ReviewProps = {
+  idOffer: OfferPreview['id'];
+}
+export function ReviewForm({idOffer}: ReviewProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const [comment, setComment] = useState<ReviewShortType['comment']>('');
+  const [rating, setRating] = useState<ReviewShortType['rating'] | null>(null);
+  const [isFormDisabled, setIsFormDisabled] = useState<boolean>(false);
   const isValid =
     comment.length >= MIN_COMMENT_LENGTH &&
     comment.length <= MAX_COMMENT_LENGTH &&
-    rating !== '';
+    rating !== null;
 
-  function handleTextareaChange(evt: ChangeEvent<HTMLTextAreaElement>) {
+  const handleTextareaChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(evt.target.value);
-  }
+  };
 
-  function handleInputChange(evt: ChangeEvent<HTMLInputElement>) {
-    setRating(evt.target.value);
-  }
+  const handleInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    setRating(Number(evt.target.value));
+  };
+
+  const resetForm = () => {
+    setComment('');
+    setRating(null);
+    setIsFormDisabled(false);
+  };
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    setIsFormDisabled(true);
+    if(idOffer) {
+      dispatch(addNewReviewAction([idOffer, {comment, rating: rating as ReviewShortType['rating']}]));
+    }
+    resetForm();
+  };
 
   return(
     <form
       className="reviews__form form"
       action="#"
       method="post"
+      onSubmit={handleSubmit}
     >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
@@ -34,9 +58,10 @@ export function ReviewForm(): JSX.Element {
                 name="rating"
                 value={score}
                 id={`${score}-stars`}
-                checked={score === rating}
+                checked={score === String(rating)}
                 onChange={handleInputChange}
                 type="radio"
+                disabled={isFormDisabled}
               />
 
               <label
@@ -58,6 +83,7 @@ export function ReviewForm(): JSX.Element {
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={comment}
         onChange={handleTextareaChange}
+        disabled={isFormDisabled}
       >
       </textarea>
       <div className="reviews__button-wrapper">
@@ -70,9 +96,9 @@ export function ReviewForm(): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={!isValid}
+          disabled={isFormDisabled || !isValid}
         >
-          Submit
+          {isFormDisabled ? '...Submit' : 'Submit'}
         </button>
       </div>
     </form>
