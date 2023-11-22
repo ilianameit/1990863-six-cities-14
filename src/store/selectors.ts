@@ -2,10 +2,12 @@ import { createSelector } from '@reduxjs/toolkit';
 import { Offer } from '../types/offer';
 import { OfferPreview } from '../types/offer-preview';
 import { Sorting } from '../types/sorting';
+import { ReviewType } from '../types/review';
+import { MAX_COMMENT_COUNT } from '../const/const';
 
 const getFavoritesItems = (favorites: OfferPreview[]) => favorites;
 
-export const favoriteOffersSelector = createSelector(getFavoritesItems, (items) =>
+export const favoriteOffersSortSelector = createSelector(getFavoritesItems, (items) =>
   items.sort((a, b) => (a.city.name > b.city.name ? 1 : -1))
 );
 
@@ -26,4 +28,11 @@ export const getSortedOffers = createSelector(
         return offers.slice().sort((a, b) => b.rating - a.rating);
     }
   }
+);
+
+const getReviews = (reviews: ReviewType[]) => reviews;
+
+export const reviewsSelector = createSelector(
+  getReviews, (reviews) =>
+    reviews.slice().sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, MAX_COMMENT_COUNT)
 );
