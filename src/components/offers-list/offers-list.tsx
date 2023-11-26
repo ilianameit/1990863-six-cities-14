@@ -2,13 +2,14 @@ import classNames from 'classnames';
 import { OfferPreview } from '../../types/offer-preview';
 import OfferCard from '../offer-card/offer-card';
 import { BlocksName } from '../../types/blocks';
+import { memo } from 'react';
 
 type OffersListProps = {
   block: BlocksName;
   offers: OfferPreview[];
   onCardHover?: (offer: OfferPreview['id']| null) => void;
 };
-export function OffersList({block, offers, onCardHover}: OffersListProps): JSX.Element {
+function OffersList({block, offers, onCardHover}: OffersListProps): JSX.Element {
   return(
     <div className={classNames(
       'places__list',
@@ -26,3 +27,6 @@ export function OffersList({block, offers, onCardHover}: OffersListProps): JSX.E
     </div>
   );
 }
+
+const OffersListMemo = memo(OffersList);
+export default OffersListMemo;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { Sorting } from '../../types/sorting';
 import classNames from 'classnames';
 import { SortingMap } from '../../const/const';
@@ -7,12 +7,12 @@ type SortingOffersProps = {
   sortingByItem: Sorting;
   onChange: (newSorting: Sorting) => void;
 }
-export function SortingOffers({sortingByItem, onChange}: SortingOffersProps): JSX.Element {
+function SortingOffers({sortingByItem, onChange}: SortingOffersProps): JSX.Element {
   const [isOpened, setIsOpened] = useState(false);
 
-  function handleSortingItemClick(type: Sorting){
+  const handleSortingItemClick = (type: Sorting) => {
     onChange(type);
-  }
+  };
   return(
     <form
       className="places__sorting"
@@ -59,3 +59,6 @@ export function SortingOffers({sortingByItem, onChange}: SortingOffersProps): JS
     </form>
   );
 }
+
+const SortingOffersMemo = memo(SortingOffers);
+export default SortingOffersMemo;

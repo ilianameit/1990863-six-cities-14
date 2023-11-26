@@ -4,6 +4,7 @@ import { OfferPreview } from '../../types/offer-preview';
 import { capitalize, getRatingWidth, roundRating } from '../../utils/common';
 import { BlocksName } from '../../types/blocks';
 import classNames from 'classnames';
+import { memo } from 'react';
 
 
 type ImageSize = 'small' | 'large';
@@ -24,12 +25,12 @@ const imageSize: Record<ImageSize, {width: string; height: string}> = {
 function OfferCard({offer, block, onCardHover, size = 'large'}: OfferProps): JSX.Element {
   const {id, previewImage, title, isFavorite, isPremium, rating, type, price} = offer;
 
-  function handleMouseEnter() {
+  const handleMouseEnter = () => {
     onCardHover?.(id);
-  }
-  function handleMouseLeave() {
+  };
+  const handleMouseLeave = () => {
     onCardHover?.(null);
-  }
+  };
   return(
     <article
       className={classNames(
@@ -92,4 +93,5 @@ function OfferCard({offer, block, onCardHover, size = 'large'}: OfferProps): JSX
   );
 }
 
-export default OfferCard;
+const OfferCardMemo = memo(OfferCard);
+export default OfferCardMemo;

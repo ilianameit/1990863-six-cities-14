@@ -1,5 +1,7 @@
 import { useAppSelector } from '../../hooks';
 import { reviewsSelector } from '../../store/selectors';
+import { getReviews } from '../../store/slices/reviews/selectors';
+import { getAuthorizationStatus } from '../../store/slices/user/selectors';
 import { OfferPreview } from '../../types/offer-preview';
 import { checkAuthorizationStatus } from '../../utils/authorization-status/check-authorization-status';
 import { ReviewForm } from '../review-from/review-form';
@@ -10,10 +12,10 @@ type ReviewListProps = {
 }
 
 export function ReviewsList({idOffer}: ReviewListProps): JSX.Element{
-  const reviews = useAppSelector((state) => state.reviews);
+  const reviews = useAppSelector(getReviews);
   const reviewsToRender = reviewsSelector(reviews);
 
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isLogged = checkAuthorizationStatus(authorizationStatus);
   return(
     <section className="offer__reviews reviews">

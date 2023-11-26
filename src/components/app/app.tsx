@@ -14,6 +14,8 @@ import { checkAuthAction, fetchOffersAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import browserHistory from '../../browser-history';
 import HistoryRouter from '../history-route/history-route';
+import { getAuthorizationStatus } from '../../store/slices/user/selectors';
+import { getOffersLoadingStatus } from '../../store/slices/offers/selectors';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -26,8 +28,8 @@ function App(): JSX.Element {
     dispatch(fetchOffersAction());
   }, [dispatch]);
 
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isOffersLoading = useAppSelector(getOffersLoadingStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersLoading) {
     return (

@@ -7,6 +7,10 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { checkAuthorizationStatus } from '../../utils/authorization-status/check-authorization-status';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
+import { getAuthorizationStatus } from '../../store/slices/user/selectors';
+import { getActiveCity } from '../../store/slices/offers/selectors';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function LoginScreen(): JSX.Element {
   const [valid, setValid] = useState(false);
@@ -17,10 +21,8 @@ function LoginScreen(): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
-  const activeCity = useAppSelector((state) => state.activeCity);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const activeCity = useAppSelector(getActiveCity);
 
   const isLogged = checkAuthorizationStatus(authorizationStatus);
 
@@ -52,7 +54,7 @@ function LoginScreen(): JSX.Element {
       }));
     }
   };
-
+  //доделать дочерний компонент
   return (
     <div className="page page--gray page--login">
       {isLogged ?
@@ -62,6 +64,9 @@ function LoginScreen(): JSX.Element {
             <Helmet>
               <title>6 cities: authorization</title>
             </Helmet>
+
+            <ToastContainer />
+
             <Header withoutLogin/>
 
             <main className="page__main page__main--login">

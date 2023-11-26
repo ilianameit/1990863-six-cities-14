@@ -3,51 +3,52 @@ import Header from '../../components/header/header';
 import Locations from '../../components/locations/locations';
 import { OfferPreview } from '../../types/offer-preview';
 import { insertPlural } from '../../utils/common';
-import { OffersList } from '../../components/offers-list/offers-list';
-import { useEffect, useState } from 'react';
+import OffersList from '../../components/offers-list/offers-list';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { City } from '../../types/city';
 import { Map } from '../../components/map/map';
 import { EmptyList } from '../../components/empty-list/empty-list';
 import classNames from 'classnames';
 import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setActiveCity, setSortingItem } from '../../store/actions';
-import { SortingOffers } from '../../components/sorting-offfers/sorting-offers';
+import SortingOffers from '../../components/sorting-offers/sorting-offers';
 import { Sorting } from '../../types/sorting';
 import { getSortedOffers } from '../../store/selectors';
+import { getActiveCity, getOffers, getSortingItem } from '../../store/slices/offers/selectors';
+import { setActiveCity, setSortingItem } from '../../store/slices/offers/offers';
 
 function MainScreen(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const offers = useAppSelector((state) => state.offers);
-  const activeCity = useAppSelector((state) => state.activeCity);
+  const offers = useAppSelector(getOffers);
+  const activeCity = useAppSelector(getActiveCity);
+  const sortingByItem = useAppSelector(getSortingItem);
 
   const [searchParams, ] = useSearchParams({city: activeCity});
   const activeCityParam = searchParams.get('city') as City['name'];
 
   useEffect(() => {
-    dispatch(setActiveCity(activeCityParam)); // - хотела менять глобальное состояние activeCity.
+    dispatch(setActiveCity(activeCityParam));
   }, [activeCityParam, dispatch]);
-  const locationActiveCity = offers.find(({city}) => city.name === activeCity)?.city as City; //update: offera с локацией города может не быть
 
   const [activeCard, setActiveCard] = useState<OfferPreview['id'] | null>(null);
 
-  function handleCardHover(id: OfferPreview['id'] | null) {
-    setActiveCard(id);
-  }
-  const filteredOffersByCity = offers.filter((offer) => offer.city.name === activeCity);
+  const locationActiveCity = useMemo(() => offers.find(({city}) => city.name === activeCity)?.city as City, [activeCity, offers]);
+  const filteredOffersByCity = useMemo(() => offers.filter((offer) => offer.city.name === activeCity), [activeCity, offers]);
 
   const offersLength = filteredOffersByCity.length;
 
-  const sortingByItem = useAppSelector((state) => state.sotringByItem);
-  function handleSortingItemClick(type: Sorting) {
+  const handleCardHover = useCallback((id: OfferPreview['id'] | null) => {
+    setActiveCard(id);
+  }, []);
+
+  const handleSortingItemClick = useCallback((type: Sorting) => {
     dispatch(setSortingItem(type));
-  }
+  }, [dispatch]);
 
   const sortedOffers = getSortedOffers({offers: filteredOffersByCity, sortingItem: sortingByItem});
 
   return (
-    //header авторизован/неавторизован
     <div className="page page--gray page--main">
       <Helmet>
         <title>6 cities</title>
@@ -63,7 +64,7 @@ function MainScreen(): JSX.Element {
       >
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <Locations activeCity={activeCity} />
+          <Locations activeCity={activeCity} />  {/*при наведении перерисовывется */}
         </div>
         <div className="cities">
           {
