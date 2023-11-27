@@ -5,13 +5,13 @@ import OfferCard from '../../components/offer-card/offer-card';
 import { City } from '../../types/city';
 import { useAppSelector } from '../../hooks';
 import { favoriteOffersSortSelector } from '../../store/selectors';
-import { FavoritesEmpty } from '../../components/favorites-empty/favorites-empty';
+import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 import classNames from 'classnames';
-import React from 'react';
+import React, { memo } from 'react';
 import { getFavorites } from '../../store/slices/favorites/selectors';
 
 
-function FavoritesScreen(): JSX.Element {
+function FavoritesScreenComponent(): JSX.Element {
   const favorites = useAppSelector(getFavorites);
   const favoritesCity = new Set<City['name']>();
   const sortedFavorites = favoriteOffersSortSelector(favorites);
@@ -70,4 +70,6 @@ function FavoritesScreen(): JSX.Element {
     </div>
   );
 }
+
+const FavoritesScreen = memo(FavoritesScreenComponent);
 export default FavoritesScreen;

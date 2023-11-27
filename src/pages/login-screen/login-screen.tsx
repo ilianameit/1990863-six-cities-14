@@ -1,7 +1,7 @@
 import { Link, Navigate } from 'react-router-dom';
 import Header from '../../components/header/header';
 import { AppRoutes } from '../../const/const';
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, memo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { checkAuthorizationStatus } from '../../utils/authorization-status/check-authorization-status';
@@ -12,7 +12,7 @@ import { getActiveCity } from '../../store/slices/offers/selectors';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function LoginScreen(): JSX.Element {
+function LoginScreenComponent(): JSX.Element {
   const [valid, setValid] = useState(false);
   const [formData, setFormData] = useState<AuthData>({
     email: '',
@@ -126,4 +126,5 @@ function LoginScreen(): JSX.Element {
   );
 }
 
+const LoginScreen = memo(LoginScreenComponent);
 export default LoginScreen;
