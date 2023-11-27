@@ -5,7 +5,7 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { OfferDetails } from '../../components/offer-details/offer-details';
 import { Map } from '../../components/map/map';
 import { MAX_NEAR_PLACES_COUNT } from '../../const/const';
-import OffersList from '../../components/offers-list/offers-list';
+import OffersListMemo from '../../components/offers-list/offers-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect, useMemo } from 'react';
 import { fetchNearOffersAction, fetchOfferAction, fetchReviewsAction } from '../../store/api-actions';
@@ -65,7 +65,7 @@ function OfferScreen(): JSX.Element {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <OffersList block='near' offers={nearOffersToRender}/>
+            <OffersListMemo block='near' offers={nearOffersToRender}/>
           </section>
         </div>
       </main>

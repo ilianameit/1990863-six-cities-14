@@ -10,7 +10,7 @@ import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import { HelmetProvider } from 'react-helmet-async';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { checkAuthAction } from '../../store/api-actions';
+import { checkAuthAction, fetchOffersAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import browserHistory from '../../browser-history';
 import HistoryRouter from '../history-route/history-route';
@@ -24,11 +24,15 @@ function App(): JSX.Element {
     dispatch(checkAuthAction());
   }, [dispatch]);
 
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const isAuthChecked = useAppSelector(getAuthCheckedStatus);
-  const isOffersLoading = useAppSelector(getOffersLoadingStatus);
+  useEffect(() => {
+    dispatch(fetchOffersAction());
+  }, [dispatch]);
 
-  if (isAuthChecked || isOffersLoading) {
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isOffersLoading = useAppSelector(getOffersLoadingStatus);
+  const isAuthChecked = useAppSelector(getAuthCheckedStatus);
+
+  if (!isAuthChecked || isOffersLoading) {
     return (
       <LoadingScreen />
     );

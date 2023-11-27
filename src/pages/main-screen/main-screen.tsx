@@ -3,7 +3,7 @@ import Header from '../../components/header/header';
 import Locations from '../../components/locations/locations';
 import { OfferPreview } from '../../types/offer-preview';
 import { insertPlural } from '../../utils/common';
-import OffersList from '../../components/offers-list/offers-list';
+import OffersListMemo from '../../components/offers-list/offers-list';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { City } from '../../types/city';
 import { Map } from '../../components/map/map';
@@ -16,15 +16,9 @@ import { Sorting } from '../../types/sorting';
 import { getSortedOffers } from '../../store/selectors';
 import { getActiveCity, getOffers, getSortingItem } from '../../store/slices/offers/selectors';
 import { setActiveCity, setSortingItem } from '../../store/slices/offers/offers';
-import { fetchOffersAction } from '../../store/api-actions';
 
 function MainScreen(): JSX.Element {
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchOffersAction());
-  }, [dispatch]);
-
 
   const offers = useAppSelector(getOffers);
   const activeCity = useAppSelector(getActiveCity);
@@ -81,7 +75,7 @@ function MainScreen(): JSX.Element {
                     <h2 className="visually-hidden">Places</h2>
                     <b className="places__found">{offersLength} place{insertPlural(offersLength)} to stay in {activeCity}</b>
                     <SortingOffers sortingByItem={sortingByItem} onChange={handleSortingItemClick}/>
-                    <OffersList block='cities' offers={sortedOffers} onCardHover={handleCardHover}/>
+                    <OffersListMemo block='cities' offers={sortedOffers} onCardHover={handleCardHover}/>
                   </section>
                   <div className="cities__right-section">
                     <Map
