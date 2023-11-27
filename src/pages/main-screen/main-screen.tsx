@@ -16,9 +16,15 @@ import { Sorting } from '../../types/sorting';
 import { getSortedOffers } from '../../store/selectors';
 import { getActiveCity, getOffers, getSortingItem } from '../../store/slices/offers/selectors';
 import { setActiveCity, setSortingItem } from '../../store/slices/offers/offers';
+import { fetchOffersAction } from '../../store/api-actions';
 
 function MainScreen(): JSX.Element {
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchOffersAction());
+  }, [dispatch]);
+
 
   const offers = useAppSelector(getOffers);
   const activeCity = useAppSelector(getActiveCity);
