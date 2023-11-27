@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import MainScreen from '../../pages/main-screen/main-screen';
-import { AppRoutes } from '../../const/const';
+import { AppRoutes, AuthorizationStatus } from '../../const/const';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
@@ -22,13 +22,18 @@ function App(): JSX.Element {
 
   useEffect(() => {
     dispatch(checkAuthAction());
-    dispatch(fetchOffersAction());
-    dispatch(fetchFavoriteOffersAction());
   }, [dispatch]);
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isOffersLoading = useAppSelector(getOffersLoadingStatus);
   const isAuthChecked = useAppSelector(getAuthCheckedStatus);
+
+  useEffect(() => {
+    dispatch(fetchOffersAction());
+    if(authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoriteOffersAction());
+    }
+  }, [authorizationStatus, dispatch]);
 
   if (!isAuthChecked || isOffersLoading) {
     return (

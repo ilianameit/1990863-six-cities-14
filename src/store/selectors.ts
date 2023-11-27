@@ -8,7 +8,7 @@ import { MAX_COMMENT_COUNT } from '../const/const';
 const getFavoritesItems = (favorites: OfferPreview[]) => favorites;
 
 export const favoriteOffersSortSelector = createSelector(getFavoritesItems, (items) =>
-  items.sort((a, b) => (a.city.name > b.city.name ? 1 : -1))
+  [...items].sort((a, b) => (a.city.name > b.city.name ? 1 : -1))
 );
 
 const getOffers = (state: {offers: Offer[]; sortingItem: Sorting}) => state.offers;

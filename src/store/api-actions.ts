@@ -55,6 +55,20 @@ export const fetchFavoriteOffersAction = createAsyncThunk<
   }
 );
 
+export const changeFavoriteStatusAction = createAsyncThunk<
+  OfferPreview,
+  { id: Offer['id']; status: number },
+  AsyncActionType
+>(
+  `${NameSpace.Favorites}/postFavoriteStatus`,
+  async ({ id, status }, { extra: api }) => {
+    const secondString = `${APIRoute.Favorite}/${id}/${status}`;
+    const { data } = await api.post<OfferPreview>(secondString);
+
+    return data;
+  }
+);
+
 export const fetchNearOffersAction = createAsyncThunk<
   OfferPreview[],
   OfferPreview['id'],

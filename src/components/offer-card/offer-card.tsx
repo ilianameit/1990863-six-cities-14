@@ -1,11 +1,15 @@
-import { Link } from 'react-router-dom';
-import { AppRoutes } from '../../const/const';
+import { Link, useNavigate } from 'react-router-dom';
+import { AppRoutes, AuthorizationStatus } from '../../const/const';
 import { OfferPreview } from '../../types/offer-preview';
 import { capitalize, getRatingWidth, roundRating } from '../../utils/common';
 import { BlocksName } from '../../types/blocks';
 import classNames from 'classnames';
-import { memo } from 'react';
-
+import { memo, useState } from 'react';
+import { getErrorStatus } from '../../store/slices/favorites/selectors';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import ErrorScreen from '../../pages/error-screen/error-screen';
+import { changeFavoriteStatusAction } from '../../store/api-actions';
+import { getAuthorizationStatus } from '../../store/slices/user/selectors';
 
 type ImageSize = 'small' | 'large';
 
@@ -21,9 +25,28 @@ const imageSize: Record<ImageSize, {width: string; height: string}> = {
   large:{ width: '260', height: '200'},
 };
 
-
 function OfferCardComponent({offer, block, onCardHover, size = 'large'}: OfferProps): JSX.Element {
   const {id, previewImage, title, isFavorite, isPremium, rating, type, price} = offer;
+
+  const [isBookmarkActive, setBookmarkActive] = useState(isFavorite);
+  const dispatch = useAppDispatch();
+  const navigateTo = useNavigate();
+
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
+  const handleBookmarkButtonClick = () => {
+    if(authorizationStatus !== AuthorizationStatus.Auth) {
+      navigateTo(AppRoutes.Login);
+    }
+
+    dispatch(
+      changeFavoriteStatusAction({
+        id: id,
+        status: Number(!isBookmarkActive),
+      })
+    );
+    setBookmarkActive((prevBookmark) => !prevBookmark);
+  };
 
   const handleMouseEnter = () => {
     onCardHover?.(id);
@@ -31,6 +54,14 @@ function OfferCardComponent({offer, block, onCardHover, size = 'large'}: OfferPr
   const handleMouseLeave = () => {
     onCardHover?.(null);
   };
+
+  const hasError = useAppSelector(getErrorStatus);
+
+  // if (hasError) {
+  //   return (
+  //     <ErrorScreen id={id} isFavorite={isFavorite} />);
+  // }
+
   return(
     <article
       className={classNames(
@@ -70,7 +101,14 @@ function OfferCardComponent({offer, block, onCardHover, size = 'large'}: OfferPr
             <b className="place-card__price-value">&euro;{price}&nbsp;</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button button ${isFavorite && 'place-card__bookmark-button--active'}`} type="button" onClick={() => ({/*при авторизации убирать кнопку, иначе направить на стр авторизации */})}>
+          <button
+            className={classNames(
+              'place-card__bookmark-button button',
+              {'place-card__bookmark-button--active': isBookmarkActive}
+            )}
+            type="button"
+            onClick={handleBookmarkButtonClick}
+          >
             <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark"></use>
             </svg>

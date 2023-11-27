@@ -16,6 +16,7 @@ function FavoritesScreenComponent(): JSX.Element {
   const favoritesCity = new Set<City['name']>();
   const sortedFavorites = favoriteOffersSortSelector(favorites);
 
+
   const isFavoritesEmpty = Boolean(!sortedFavorites.length);
 
   sortedFavorites.forEach(({city}) => {

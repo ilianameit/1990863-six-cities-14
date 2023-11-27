@@ -113,7 +113,7 @@ function LoginScreenComponent(): JSX.Element {
                 </section>
                 <section className="locations locations--login locations--current">
                   <div className="locations__item">
-                    <Link className="locations__item-link" to={`${AppRoutes.Main}?city=${activeCity}`}>
+                    <Link className="locations__item-link" to={`${AppRoutes.Main}?city=${activeCity}`}> {/* доделать случайный город*/}
                       <span>{activeCity}</span>
                     </Link>
                   </div>
