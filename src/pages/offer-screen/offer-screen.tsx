@@ -5,21 +5,23 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { OfferDetails } from '../../components/offer-details/offer-details';
 import { Map } from '../../components/map/map';
 import { MAX_NEAR_PLACES_COUNT } from '../../const/const';
-import { OffersList } from '../../components/offers-list/offers-list';
+import OffersListMemo from '../../components/offers-list/offers-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { useEffect } from 'react';
-import { dropOffer } from '../../store/actions';
+import { useEffect, useMemo } from 'react';
 import { fetchNearOffersAction, fetchOfferAction, fetchReviewsAction } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
+import { getOffer, getOfferLoadingStatus } from '../../store/slices/offer/selectors';
+import { dropOffer } from '../../store/slices/offer/offer';
+import { getNearOffers } from '../../store/slices/near-offers/selectors';
 
 function OfferScreen(): JSX.Element {
   const {id} = useParams();
   const dispatch = useAppDispatch();
 
-  const isLoading = useAppSelector((state) => state.isOfferLoading);
-  const offer = useAppSelector((state) => state.offer);
-  const nearOffers = useAppSelector((state) => state.nearOffers);
-  const nearOffersToRender = nearOffers.slice(0, MAX_NEAR_PLACES_COUNT);
+  const isLoading = useAppSelector(getOfferLoadingStatus);
+  const offer = useAppSelector(getOffer);
+  const nearOffers = useAppSelector(getNearOffers);
+  const nearOffersToRender = useMemo(() =>nearOffers.slice(0, MAX_NEAR_PLACES_COUNT), [nearOffers]);
 
   useEffect(() => {
     if(id) {
@@ -63,7 +65,7 @@ function OfferScreen(): JSX.Element {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <OffersList block='near' offers={nearOffersToRender}/>
+            <OffersListMemo block='near' offers={nearOffersToRender}/>
           </section>
         </div>
       </main>

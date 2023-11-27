@@ -5,6 +5,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
 import { checkAuthorizationStatus } from '../../utils/authorization-status/check-authorization-status';
 import { fetchFavoriteOffersAction, logoutAction } from '../../store/api-actions';
+import { getAuthorizationStatus, getUser } from '../../store/slices/user/selectors';
+import { getFavorites } from '../../store/slices/favorites/selectors';
 
 type HeaderProp = {
   withoutLogin?: boolean;
@@ -12,12 +14,10 @@ type HeaderProp = {
 
 function Header({withoutLogin}: HeaderProp): JSX.Element {
   const dispatch = useAppDispatch();
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isLogged = checkAuthorizationStatus(authorizationStatus);
-  const favorites = useAppSelector((state) => state.favorites);
-  const user = useAppSelector((state) => state.user);
+  const favorites = useAppSelector(getFavorites);
+  const user = useAppSelector(getUser);
 
   useEffect(() => {
     dispatch(fetchFavoriteOffersAction());
@@ -26,7 +26,7 @@ function Header({withoutLogin}: HeaderProp): JSX.Element {
   const handleLogOutClick = () => {
     dispatch(logoutAction());
   };
-
+  //перерисовывется весь header при нажатии города, наведении на карточку,  при вводе логина
   return(
     <header className="header">
       <div className="container">

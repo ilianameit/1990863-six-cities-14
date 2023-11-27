@@ -8,10 +8,11 @@ import { favoriteOffersSortSelector } from '../../store/selectors';
 import { FavoritesEmpty } from '../../components/favorites-empty/favorites-empty';
 import classNames from 'classnames';
 import React from 'react';
+import { getFavorites } from '../../store/slices/favorites/selectors';
 
 
 function FavoritesScreen(): JSX.Element {
-  const favorites = useAppSelector((state) => state.favorites);
+  const favorites = useAppSelector(getFavorites);
   const favoritesCity = new Set<City['name']>();
   const sortedFavorites = favoriteOffersSortSelector(favorites);
 

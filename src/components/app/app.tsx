@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import MainScreen from '../../pages/main-screen/main-screen';
-import { AppRoutes, AuthorizationStatus } from '../../const/const';
+import { AppRoutes } from '../../const/const';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
@@ -14,6 +14,8 @@ import { checkAuthAction, fetchOffersAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import browserHistory from '../../browser-history';
 import HistoryRouter from '../history-route/history-route';
+import { getAuthCheckedStatus, getAuthorizationStatus } from '../../store/slices/user/selectors';
+import { getOffersLoadingStatus } from '../../store/slices/offers/selectors';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -26,10 +28,11 @@ function App(): JSX.Element {
     dispatch(fetchOffersAction());
   }, [dispatch]);
 
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isOffersLoading = useAppSelector(getOffersLoadingStatus);
+  const isAuthChecked = useAppSelector(getAuthCheckedStatus);
 
-  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersLoading) {
+  if (!isAuthChecked || isOffersLoading) {
     return (
       <LoadingScreen />
     );

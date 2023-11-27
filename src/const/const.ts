@@ -23,7 +23,6 @@ enum AppRoutes {
   Login = '/login',
   Favorites = '/favorites',
   Offer = '/offer',
-  NotFound = '/404'
 }
 
 enum AuthorizationStatus {
@@ -42,13 +41,22 @@ const SortingMap = {
 } as const;
 
 
-export enum APIRoute {
+enum APIRoute {
   Offers = '/offers',
   Favorite = '/favorite',
   Comments = '/comments',
   Login = '/login',
   Logout = '/logout',
   Nearby = '/nearby'
+}
+
+enum NameSpace {
+  Offers = 'OFFERS',
+  Offer = 'OFFER',
+  Favorites = 'FAVORITES',
+  Reviews = 'REVIEWS',
+  User = 'USER',
+  NearOffers = 'NEAR_OFFERS'
 }
 
 export {
@@ -62,5 +70,7 @@ export {
   AppRoutes,
   AuthorizationStatus,
   CityName,
-  SortingMap
+  SortingMap,
+  APIRoute,
+  NameSpace
 };

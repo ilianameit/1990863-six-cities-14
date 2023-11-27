@@ -1,8 +1,6 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import { getToken } from './token';
 import { StatusCodes } from 'http-status-codes';
-import browserHistory from '../browser-history';
-import { AppRoutes } from '../const/const';
 import { toast } from 'react-toastify';
 
 type DetailMessageType = {
@@ -46,10 +44,6 @@ export const createAPI = (): AxiosInstance => {
         const detailMessage = (error.response.data);
 
         toast.warn(detailMessage.message);
-      }
-
-      if (error.response?.status === StatusCodes['NOT_FOUND']) {
-        browserHistory.push(AppRoutes.NotFound);
       }
 
       throw error;
