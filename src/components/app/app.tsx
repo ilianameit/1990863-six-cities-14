@@ -10,7 +10,7 @@ import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import { HelmetProvider } from 'react-helmet-async';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { checkAuthAction, fetchOffersAction } from '../../store/api-actions';
+import { checkAuthAction, fetchFavoriteOffersAction, fetchOffersAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import browserHistory from '../../browser-history';
 import HistoryRouter from '../history-route/history-route';
@@ -22,10 +22,8 @@ function App(): JSX.Element {
 
   useEffect(() => {
     dispatch(checkAuthAction());
-  }, [dispatch]);
-
-  useEffect(() => {
     dispatch(fetchOffersAction());
+    dispatch(fetchFavoriteOffersAction());
   }, [dispatch]);
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);

@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Offer } from '../../types/offer';
 import { ImagesContainer } from './offer-images-container';
 import { capitalize, getRatingWidth, insertPlural, roundRating } from '../../utils/common';
-import { ReviewsList } from '../reviews-list/reviews-list';
+import ReviewsList from '../reviews-list/reviews-list';
 
 type OfferDetailsProps = {
   offer: Offer;
 }
-export function OfferDetails({offer}: OfferDetailsProps): JSX.Element {
+export function OfferDetailsComponent({offer}: OfferDetailsProps): JSX.Element {
 
   const {
     id,
@@ -108,3 +108,6 @@ export function OfferDetails({offer}: OfferDetailsProps): JSX.Element {
     </React.Fragment>
   );
 }
+
+const OfferDetails = memo(OfferDetailsComponent);
+export default OfferDetails;

@@ -22,7 +22,7 @@ const imageSize: Record<ImageSize, {width: string; height: string}> = {
 };
 
 
-function OfferCard({offer, block, onCardHover, size = 'large'}: OfferProps): JSX.Element {
+function OfferCardComponent({offer, block, onCardHover, size = 'large'}: OfferProps): JSX.Element {
   const {id, previewImage, title, isFavorite, isPremium, rating, type, price} = offer;
 
   const handleMouseEnter = () => {
@@ -93,5 +93,5 @@ function OfferCard({offer, block, onCardHover, size = 'large'}: OfferProps): JSX
   );
 }
 
-const OfferCardMemo = memo(OfferCard);
-export default OfferCardMemo;
+const OfferCard = memo(OfferCardComponent);
+export default OfferCard;
