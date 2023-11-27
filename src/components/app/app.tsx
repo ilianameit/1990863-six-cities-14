@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import MainScreen from '../../pages/main-screen/main-screen';
 import { AppRoutes, AuthorizationStatus } from '../../const/const';
 import LoginScreen from '../../pages/login-screen/login-screen';
@@ -12,6 +12,8 @@ import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { checkAuthAction, fetchOffersAction } from '../../store/api-actions';
 import { useEffect } from 'react';
+import browserHistory from '../../browser-history';
+import HistoryRouter from '../history-route/history-route';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -35,7 +37,7 @@ function App(): JSX.Element {
   return (
     <HelmetProvider>
 
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <ScrollToTop />
         <Routes>
           <Route path={AppRoutes.Main} element={<MainScreen/>}/>
@@ -55,7 +57,7 @@ function App(): JSX.Element {
 
 
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
   );
 }

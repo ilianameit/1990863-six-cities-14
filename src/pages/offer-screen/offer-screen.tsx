@@ -8,39 +8,41 @@ import { MAX_NEAR_PLACES_COUNT } from '../../const/const';
 import { OffersList } from '../../components/offers-list/offers-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
-import { dropOffer, fetchNearOffers } from '../../store/actions';
-import { fetchOfferAction } from '../../store/api-actions';
+import { dropOffer } from '../../store/actions';
+import { fetchNearOffersAction, fetchOfferAction, fetchReviewsAction } from '../../store/api-actions';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 function OfferScreen(): JSX.Element {
   const {id} = useParams();
   const dispatch = useAppDispatch();
 
+  const isLoading = useAppSelector((state) => state.isOfferLoading);
   const offer = useAppSelector((state) => state.offer);
   const nearOffers = useAppSelector((state) => state.nearOffers);
   const nearOffersToRender = nearOffers.slice(0, MAX_NEAR_PLACES_COUNT);
-  //не отрисовывает количество точек на карте
 
   useEffect(() => {
     if(id) {
       dispatch(fetchOfferAction(id));
-      dispatch(fetchNearOffers(id));
+      dispatch(fetchNearOffersAction(id));
+      dispatch(fetchReviewsAction(id));
     }
     return () => {
       dispatch(dropOffer());
     };
   }, [dispatch, id]);
 
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
 
   if(!offer) {
     return <NotFoundScreen />;
   }
 
-  const activeCity = offer.city;
-
-  const {title} = offer;
-
+  const {title, city: activeCity} = offer;
+  const nearOffersForMap = nearOffersToRender.concat(offer);
   return(
-    //header авторизован/неавторизован
     <div className="page">
       <Helmet>
         <title>6 cities: {title}</title>
@@ -54,7 +56,7 @@ function OfferScreen(): JSX.Element {
           <Map
             block='offer'
             city={activeCity}
-            offers={nearOffersToRender}
+            offers={nearOffersForMap}
             selectedOffer={offer.id}
           />
         </section>

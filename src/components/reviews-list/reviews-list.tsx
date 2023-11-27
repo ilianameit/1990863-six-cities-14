@@ -1,14 +1,17 @@
-import { MAX_COMMENT_COUNT} from '../../const/const';
 import { useAppSelector } from '../../hooks';
-import { reviews } from '../../mocks/reviews';
+import { reviewsSelector } from '../../store/selectors';
+import { OfferPreview } from '../../types/offer-preview';
 import { checkAuthorizationStatus } from '../../utils/authorization-status/check-authorization-status';
 import { ReviewForm } from '../review-from/review-form';
 import { Review } from '../review/review';
 
-export function ReviewsList(): JSX.Element{
-  const reviewsToRender = [...reviews]
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, MAX_COMMENT_COUNT);
+type ReviewListProps = {
+  idOffer: OfferPreview['id'];
+}
+
+export function ReviewsList({idOffer}: ReviewListProps): JSX.Element{
+  const reviews = useAppSelector((state) => state.reviews);
+  const reviewsToRender = reviewsSelector(reviews);
 
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const isLogged = checkAuthorizationStatus(authorizationStatus);
@@ -20,7 +23,7 @@ export function ReviewsList(): JSX.Element{
           <Review key={review.id} review={review}/>
         ))}
       </ul>
-      {isLogged && <ReviewForm />}
+      {isLogged && <ReviewForm idOffer={idOffer}/>}
     </section>
   );
 }

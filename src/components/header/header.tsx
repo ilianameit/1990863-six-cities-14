@@ -2,10 +2,9 @@ import { Link } from 'react-router-dom';
 import Logo from '../logo/logo';
 import { AppRoutes} from '../../const/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchFavoriteOffers } from '../../store/actions';
 import { useEffect } from 'react';
 import { checkAuthorizationStatus } from '../../utils/authorization-status/check-authorization-status';
-import { logoutAction } from '../../store/api-actions';
+import { fetchFavoriteOffersAction, logoutAction } from '../../store/api-actions';
 
 type HeaderProp = {
   withoutLogin?: boolean;
@@ -19,13 +18,15 @@ function Header({withoutLogin}: HeaderProp): JSX.Element {
   const isLogged = checkAuthorizationStatus(authorizationStatus);
   const favorites = useAppSelector((state) => state.favorites);
   const user = useAppSelector((state) => state.user);
+
   useEffect(() => {
-    dispatch(fetchFavoriteOffers());
+    dispatch(fetchFavoriteOffersAction());
   }, [dispatch]);
 
   const handleLogOutClick = () => {
     dispatch(logoutAction());
   };
+
   return(
     <header className="header">
       <div className="container">

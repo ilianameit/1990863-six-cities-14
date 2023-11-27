@@ -10,8 +10,6 @@ const MIN_COMMENT_LENGTH = 50;
 const MAX_COMMENT_COUNT = 10;
 const MAX_NEAR_PLACES_COUNT = 3;
 
-const TIMEOUT_SHOW_ERROR = 2000;
-
 const ratingStarsName = {
   '1': 'terribly',
   '2': 'badly',
@@ -25,6 +23,7 @@ enum AppRoutes {
   Login = '/login',
   Favorites = '/favorites',
   Offer = '/offer',
+  NotFound = '/404'
 }
 
 enum AuthorizationStatus {
@@ -49,6 +48,7 @@ export enum APIRoute {
   Comments = '/comments',
   Login = '/login',
   Logout = '/logout',
+  Nearby = '/nearby'
 }
 
 export {
@@ -58,7 +58,6 @@ export {
   MIN_COMMENT_LENGTH,
   MAX_COMMENT_COUNT,
   MAX_NEAR_PLACES_COUNT,
-  TIMEOUT_SHOW_ERROR,
   ratingStarsName,
   AppRoutes,
   AuthorizationStatus,
