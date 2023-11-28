@@ -3,7 +3,7 @@ import { Offer } from '../../types/offer';
 import { ImagesContainer } from './offer-images-container';
 import { capitalize, getRatingWidth, insertPlural, roundRating } from '../../utils/common';
 import ReviewsList from '../reviews-list/reviews-list';
-import classNames from 'classnames';
+import FavoriteButton from '../favorite-button/favorite-button';
 
 type OfferDetailsProps = {
   offer: Offer;
@@ -44,19 +44,7 @@ export function OfferDetailsComponent({offer}: OfferDetailsProps): JSX.Element {
             <h1 className="offer__name">
               {title}
             </h1>
-            <button
-              className={classNames(
-                'offer__bookmark-button button',
-                {'offer__bookmark-button--active' : isFavorite}
-              )}
-              type="button"
-              onClick={() => ({/*при авторизации убирать кнопку, иначе направить на стр авторизации */})}
-            >
-              <svg className="offer__bookmark-icon" width={31} height={33}>
-                <use xlinkHref="#icon-bookmark"></use>
-              </svg>
-              <span className="visually-hidden">To bookmarks</span>
-            </button>
+            <FavoriteButton id={id} isFavorite={isFavorite} size='offerDetail' />
           </div>
           <div className="offer__rating rating">
             <div className="offer__stars rating__stars">

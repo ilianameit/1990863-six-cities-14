@@ -46,8 +46,7 @@ function MainScreenComponent(): JSX.Element {
     dispatch(setSortingItem(type));
   }, [dispatch]);
 
-  const sortedOffers = getSortedOffers({offers: filteredOffersByCity, sortingItem: sortingByItem});
-
+  const sortedOffers = useAppSelector((state) => getSortedOffers(state, filteredOffersByCity));
   return (
     <div className="page page--gray page--main">
       <Helmet>

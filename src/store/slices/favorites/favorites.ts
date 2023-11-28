@@ -22,9 +22,6 @@ export const favoritesSlice = createSlice({
       .addCase(fetchFavoriteOffersAction.fulfilled, (state, action) => {
         state.favorites = action.payload;
       })
-      .addCase(changeFavoriteStatusAction.pending, (state) => {
-        state.hasError = false;
-      })
       .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
         const isFavorite = action.payload.isFavorite;
 
@@ -36,10 +33,6 @@ export const favoritesSlice = createSlice({
             (offer) => offer.id !== action.payload.id
           );
         }
-        state.hasError = false;
-      })
-      .addCase(changeFavoriteStatusAction.rejected, (state) => {
-        state.hasError = true;
       });
   },
 });

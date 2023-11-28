@@ -62,8 +62,7 @@ export const changeFavoriteStatusAction = createAsyncThunk<
 >(
   `${NameSpace.Favorites}/postFavoriteStatus`,
   async ({ id, status }, { extra: api }) => {
-    const secondString = `${APIRoute.Favorite}/${id}/${status}`;
-    const { data } = await api.post<OfferPreview>(secondString);
+    const { data } = await api.post<OfferPreview>(`${APIRoute.Favorite}/${id}/${status}`);
 
     return data;
   }

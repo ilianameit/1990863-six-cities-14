@@ -1,6 +1,6 @@
 import Logo from '../logo/logo';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback } from 'react';
 import { checkAuthorizationStatus } from '../../utils/authorization-status/check-authorization-status';
 import { logoutAction } from '../../store/api-actions';
 import { getAuthorizationStatus, getUser } from '../../store/slices/user/selectors';
@@ -16,7 +16,7 @@ type HeaderProp = {
 function HeaderComponent({withoutLogin}: HeaderProp): JSX.Element {
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const isLogged = useMemo(() => checkAuthorizationStatus(authorizationStatus), [authorizationStatus]);
+  const isLogged = checkAuthorizationStatus(authorizationStatus);
   const favorites = useAppSelector(getFavorites);
   const user = useAppSelector(getUser);
 
