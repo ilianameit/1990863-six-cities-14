@@ -1,6 +1,6 @@
 import { Link, Navigate } from 'react-router-dom';
 import Header from '../../components/header/header';
-import { AppRoutes } from '../../const/const';
+import { AppRoutes, CityName } from '../../const/const';
 import React, { ChangeEvent, FormEvent, memo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -8,7 +8,6 @@ import { checkAuthorizationStatus } from '../../utils/authorization-status/check
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
 import { getAuthorizationStatus } from '../../store/slices/user/selectors';
-import { getActiveCity } from '../../store/slices/offers/selectors';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -22,7 +21,6 @@ function LoginScreenComponent(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const activeCity = useAppSelector(getActiveCity);
 
   const isLogged = checkAuthorizationStatus(authorizationStatus);
 
@@ -54,7 +52,9 @@ function LoginScreenComponent(): JSX.Element {
       }));
     }
   };
-  //доделать дочерний компонент
+
+  const randomCity = CityName[Math.floor(Math.random() * CityName.length)];
+
   return (
     <div className="page page--gray page--login">
       {isLogged ?
@@ -113,8 +113,8 @@ function LoginScreenComponent(): JSX.Element {
                 </section>
                 <section className="locations locations--login locations--current">
                   <div className="locations__item">
-                    <Link className="locations__item-link" to={`${AppRoutes.Main}?city=${activeCity}`}> {/* доделать случайный город*/}
-                      <span>{activeCity}</span>
+                    <Link className="locations__item-link" to={`${AppRoutes.Main}?city=${randomCity}`}>
+                      <span>{randomCity}</span>
                     </Link>
                   </div>
                 </section>
