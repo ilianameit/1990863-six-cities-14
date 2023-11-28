@@ -1,7 +1,7 @@
 import { Link, Navigate } from 'react-router-dom';
 import Header from '../../components/header/header';
 import { AppRoutes, CityName } from '../../const/const';
-import React, { ChangeEvent, FormEvent, memo, useState } from 'react';
+import React, { ChangeEvent, FormEvent, memo, useCallback, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { checkAuthorizationStatus } from '../../utils/authorization-status/check-authorization-status';
@@ -10,6 +10,7 @@ import { AuthData } from '../../types/auth-data';
 import { getAuthorizationStatus } from '../../store/slices/user/selectors';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import LoginForm from '../../components/login-form/login-form';
 
 function LoginScreenComponent(): JSX.Element {
   const [valid, setValid] = useState(false);
@@ -33,7 +34,7 @@ function LoginScreenComponent(): JSX.Element {
     return isValidEmail && isValidPass;
   };
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
     if (isValidForm({ ...formData, [name]: value })) {
@@ -41,9 +42,9 @@ function LoginScreenComponent(): JSX.Element {
     } else {
       setValid(false);
     }
-  };
+  }, [formData]);
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback((evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (valid) {
       dispatch(loginAction({
@@ -51,7 +52,7 @@ function LoginScreenComponent(): JSX.Element {
         password: formData.password
       }));
     }
-  };
+  }, [dispatch, formData.email, formData.password, valid]);
 
   const randomCity = CityName[Math.floor(Math.random() * CityName.length)];
 
@@ -73,43 +74,7 @@ function LoginScreenComponent(): JSX.Element {
               <div className="page__login-container container">
                 <section className="login">
                   <h1 className="login__title">Sign in</h1>
-                  <form
-                    className="login__form form"
-                    action="#"
-                    method="post"
-                    onSubmit={handleSubmit}
-                  >
-                    <div className="login__input-wrapper form__input-wrapper">
-                      <label className="visually-hidden">E-mail</label>
-                      <input
-                        onChange={handleInputChange}
-                        value={formData.email}
-                        className="login__input form__input"
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        required
-                      />
-                    </div>
-                    <div className="login__input-wrapper form__input-wrapper">
-                      <label className="visually-hidden">Password</label>
-                      <input
-                        onChange={handleInputChange}
-                        value={formData.password}
-                        className="login__input form__input"
-                        type="password"
-                        name="password" placeholder="Password"
-                        required
-                      />
-                    </div>
-                    <button
-                      className="login__submit form__submit button"
-                      type="submit"
-                      disabled={!valid}
-                    >
-                      Sign in
-                    </button>
-                  </form>
+                  <LoginForm valid={valid} onInputChange={handleInputChange} formData={formData} onSubmit={handleSubmit}/>
                 </section>
                 <section className="locations locations--login locations--current">
                   <div className="locations__item">
