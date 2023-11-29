@@ -5,12 +5,12 @@ import { changeFavoriteStatusAction, fetchFavoriteOffersAction } from '../../api
 
 type FavoritesStateType = {
   favorites: OfferPreview[];
-  hasError: boolean;
+  isNeedFavoriteUpdate: boolean;
 }
 
 const initialState: FavoritesStateType = {
   favorites: [],
-  hasError: false
+  isNeedFavoriteUpdate: true,
 };
 
 export const favoritesSlice = createSlice({
@@ -24,7 +24,7 @@ export const favoritesSlice = createSlice({
       })
       .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
         const isFavorite = action.payload.isFavorite;
-
+        state.isNeedFavoriteUpdate = true;
         if(isFavorite) {
           state.favorites.push(action.payload);
         }
@@ -33,6 +33,9 @@ export const favoritesSlice = createSlice({
             (offer) => offer.id !== action.payload.id
           );
         }
+      })
+      .addCase(changeFavoriteStatusAction.rejected, (state) => {
+        state.isNeedFavoriteUpdate = false;
       });
   },
 });

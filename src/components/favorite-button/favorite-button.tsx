@@ -1,11 +1,13 @@
 import classNames from 'classnames';
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { OfferPreview } from '../../types/offer-preview';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useNavigate } from 'react-router-dom';
 import { getAuthorizationStatus } from '../../store/slices/user/selectors';
 import { AppRoutes, AuthorizationStatus } from '../../const/const';
 import { changeFavoriteStatusAction } from '../../store/api-actions';
+import { setFavorite } from '../../store/slices/offers/offers';
+import { isNeedFavoriteUpdateStatus } from '../../store/slices/favorites/selectors';
 
 type ImageBlock = 'default' | 'offerDetail';
 
@@ -18,26 +20,33 @@ type FavoriteButtonProps = {
   id: OfferPreview['id'];
   isFavorite: OfferPreview['isFavorite'];
   size?: ImageBlock;
-  onFavoriteClick: () => void;
 }
 
-function FavoriteButtonComponent({id, isFavorite, size = 'default', onFavoriteClick}: FavoriteButtonProps): JSX.Element {
+function FavoriteButtonComponent({id, isFavorite, size = 'default'}: FavoriteButtonProps): JSX.Element {
   const dispatch = useAppDispatch();
   const navigateTo = useNavigate();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isNeedFavoriteUpdate = useAppSelector(isNeedFavoriteUpdateStatus);
+  const [activeFavorite, setActiveFavorite] = useState(isFavorite);
+
 
   const handleBookmarkButtonClick = () => {
 
     if(authorizationStatus !== AuthorizationStatus.Auth) {
       navigateTo(AppRoutes.Login);
+      return;
     }
     dispatch(
       changeFavoriteStatusAction({
         id: id,
-        status: Number(!isFavorite),
+        status: Number(!activeFavorite),
       })
     );
-    onFavoriteClick();
+
+    if(isNeedFavoriteUpdate) {
+      dispatch(setFavorite(id));
+      setActiveFavorite((prevFavorite) => !prevFavorite);
+    }
 
   };
 
@@ -47,8 +56,8 @@ function FavoriteButtonComponent({id, isFavorite, size = 'default', onFavoriteCl
         {'place-card__bookmark-button': size === 'default'},
         {'offer__bookmark-button': size === 'offerDetail'},
         'button',
-        {'place-card__bookmark-button--active': isFavorite && size === 'default'},
-        {'offer__bookmark-button--active': isFavorite && size === 'offerDetail'},
+        {'place-card__bookmark-button--active': activeFavorite && size === 'default'},
+        {'offer__bookmark-button--active': activeFavorite && size === 'offerDetail'},
       )}
       type="button"
       onClick={handleBookmarkButtonClick}
