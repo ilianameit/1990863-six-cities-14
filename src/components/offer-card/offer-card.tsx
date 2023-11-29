@@ -4,10 +4,8 @@ import { OfferPreview } from '../../types/offer-preview';
 import { capitalize, getRatingWidth, roundRating } from '../../utils/common';
 import { BlocksName } from '../../types/blocks';
 import classNames from 'classnames';
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import FavoriteButton from '../favorite-button/favorite-button';
-import { useAppDispatch } from '../../hooks';
-import { changeFavoriteStatusAction } from '../../store/api-actions';
 
 type ImageSize = 'small' | 'large';
 
@@ -25,7 +23,6 @@ const imageSize: Record<ImageSize, {width: string; height: string}> = {
 
 function OfferCardComponent({offer, block, onCardHover, size = 'large'}: OfferProps): JSX.Element {
   const {id, previewImage, title, isFavorite, isPremium, rating, type, price} = offer;
-  const [activeFavorite, setActiveFavorite] = useState(isFavorite);
 
   const handleMouseEnter = () => {
     onCardHover?.(id);
@@ -73,7 +70,7 @@ function OfferCardComponent({offer, block, onCardHover, size = 'large'}: OfferPr
             <b className="place-card__price-value">&euro;{price}&nbsp;</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <FavoriteButton id={id} isFavorite={activeFavorite} onFavoriteClick ={() => setActiveFavorite((prevFavorite) => !prevFavorite)} />
+          <FavoriteButton id={id} isFavorite={isFavorite} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

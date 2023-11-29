@@ -7,7 +7,7 @@ import { memo } from 'react';
 type OffersListProps = {
   block: BlocksName;
   offers: OfferPreview[];
-  onCardHover?: (offer: OfferPreview['id']| null) => void;
+  onCardHover?: (offer: OfferPreview['id'] | null) => void;
 };
 function OffersListComponent({block, offers, onCardHover}: OffersListProps): JSX.Element {
   return(
