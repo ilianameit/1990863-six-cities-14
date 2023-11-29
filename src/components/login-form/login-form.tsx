@@ -1,14 +1,46 @@
-import { ChangeEvent, FormEvent, memo } from 'react';
+import { ChangeEvent, FormEvent, memo, useCallback, useState } from 'react';
 import { AuthData } from '../../types/auth-data';
+import { useAppDispatch } from '../../hooks';
+import { loginAction } from '../../store/api-actions';
 
-type LoginFormProps = {
-  valid: boolean;
-  onInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  formData: AuthData;
-  onSubmit: (evt: FormEvent<HTMLFormElement>) => void;
-};
+function LoginFormComponent(): JSX.Element {
+  const dispatch = useAppDispatch();
 
-function LoginFormComponent({valid, onInputChange, formData, onSubmit}: LoginFormProps): JSX.Element {
+  const [valid, setValid] = useState(false);
+  const [formData, setFormData] = useState<AuthData>({
+    email: '',
+    password: '',
+  });
+
+  const isValidForm = (form: AuthData) => {
+    const validEmail = new RegExp(/^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w+)$/);
+    const validPass = new RegExp(/^(?=.*\d)(?=.*[a-z]).*$/);
+    const isValidEmail = validEmail.test(form.email);
+    const isValidPass = validPass.test(form.password);
+
+    return isValidEmail && isValidPass;
+  };
+
+  const onInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+    if (isValidForm({ ...formData, [name]: value })) {
+      setValid(true);
+    } else {
+      setValid(false);
+    }
+  }, [formData]);
+
+  const onSubmit = useCallback((evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    if (valid) {
+      dispatch(loginAction({
+        email: formData.email,
+        password: formData.password
+      }));
+    }
+  }, [dispatch, formData.email, formData.password, valid]);
+
   return(
     <form
       className="login__form form"
