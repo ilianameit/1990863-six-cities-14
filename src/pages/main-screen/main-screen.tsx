@@ -6,7 +6,7 @@ import { insertPlural } from '../../utils/common';
 import OffersListMemo from '../../components/offers-list/offers-list';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { City } from '../../types/city';
-import { Map } from '../../components/map/map';
+import Map from '../../components/map/map';
 import EmptyList from '../../components/empty-list/empty-list';
 import classNames from 'classnames';
 import { useSearchParams } from 'react-router-dom';

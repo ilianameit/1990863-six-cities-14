@@ -3,7 +3,7 @@ import Header from '../../components/header/header';
 import { useParams } from 'react-router-dom';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import OfferDetails from '../../components/offer-details/offer-details';
-import { Map } from '../../components/map/map';
+import Map from '../../components/map/map';
 import { MAX_NEAR_PLACES_COUNT } from '../../const/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { memo, useEffect, useMemo } from 'react';
