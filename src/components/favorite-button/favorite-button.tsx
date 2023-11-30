@@ -7,7 +7,7 @@ import { getAuthorizationStatus } from '../../store/slices/user/selectors';
 import { AppRoutes, AuthorizationStatus } from '../../const/const';
 import { changeFavoriteStatusAction } from '../../store/api-actions';
 import { setFavorite } from '../../store/slices/offers/offers';
-import { isNeedFavoriteUpdateStatus } from '../../store/slices/favorites/selectors';
+
 
 type ImageBlock = 'default' | 'offerDetail';
 
@@ -26,7 +26,6 @@ function FavoriteButtonComponent({id, isFavorite, size = 'default'}: FavoriteBut
   const dispatch = useAppDispatch();
   const navigateTo = useNavigate();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const isNeedFavoriteUpdate = useAppSelector(isNeedFavoriteUpdateStatus);
   const [activeFavorite, setActiveFavorite] = useState(isFavorite);
 
 
@@ -43,10 +42,10 @@ function FavoriteButtonComponent({id, isFavorite, size = 'default'}: FavoriteBut
       })
     );
 
-    if(isNeedFavoriteUpdate) {
-      dispatch(setFavorite(id));
-      setActiveFavorite((prevFavorite) => !prevFavorite);
-    }
+
+    dispatch(setFavorite(id));
+    setActiveFavorite((prevFavorite) => !prevFavorite);
+
 
   };
 

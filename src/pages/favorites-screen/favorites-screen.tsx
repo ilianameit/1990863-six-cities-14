@@ -12,7 +12,7 @@ import React, { memo } from 'react';
 
 function FavoritesScreenComponent(): JSX.Element {
   const favoritesCity = new Set<City['name']>();
-  const sortedFavorites = useAppSelector((state) => favoriteOffersSortSelector(state));
+  const sortedFavorites = useAppSelector(favoriteOffersSortSelector);
 
   const isFavoritesEmpty = Boolean(!sortedFavorites.length);
 
