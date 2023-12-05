@@ -37,3 +37,4 @@ export const reviewsSelector = createSelector(
   getReviews, (reviews) =>
     reviews.slice().sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, MAX_COMMENT_COUNT)
 );
+.
