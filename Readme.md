@@ -2,6 +2,8 @@
 
 * Студент: [Илиана Манерова](https://up.htmlacademy.ru/react/14/user/1990863).
 * Наставник: [Дмитрий Свиридов](https://htmlacademy.ru/profile/id1150851).
+
+Ссылка на проект: https://six-cities-14-manerova.vercel.app/
 ---
 
 _Не удаляйте и не изменяйте папки и файлы:_
